@@ -1,0 +1,78 @@
+
+
+body {
+    background-color: #181818;
+    color: #FFFFFF;
+}
+
+.card {
+    background-color: #282828;
+    color: #FFFFFF;
+}
+
+.card-title,
+.card-text {
+    color: #FFFFFF;
+}
+
+.navbar {
+    background-color: #181818;
+}
+
+.form-label,
+.form-control,
+.form-select,
+.btn-primary,
+.btn-secondary,  .btn-success:hover {
+    background-color: #282828;
+    color: #FFFFFF;
+}
+
+.btn-primary,  .btn-success:hover{
+    border-color: #28a745;
+}
+
+.btn-primary:hover, .btn-primary:hover,  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-secondary {
+    border-color: #28a745;
+    color: #FFFFFF;
+}
+
+.btn-secondary:hover, .btn-secondary:active {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #FFFFFF;
+}
+
+.form-control:focus, .form-select:focus{
+    border-color: #28a745 !important; 
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25) !important;
+    background-color: #404040;
+    color: #FFFFFF;
+}
+
+.btn-outline-primary{
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active{
+    border-color: #28a745;
+    background-color: #28a745;
+    color: #FFFFFF;
+}
+
+.btn-success:active{
+    border-color: #28a745;
+    background-color: #28a745;
+    color: #FFFFFF;
+}
+
+.border-green{
+    border: 1px solid #28a745;
+}
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../main-css-for-pages.css">
+</head>
+<body>
+    <div id="toolbarContainer">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toolbarContainer = document.getElementById("toolbarContainer");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    toolbarContainer.innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "../toolbar/toolbar.html", true);
+            xhttp.send();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pitanja:</h5>
+                <div id="question1" class="mb-3">
+                    <label for="answer1" class="form-label">Pitanje 1: Jeste li student?</label>
+                    <select class="form-select" id="answer1">
+                        <option value="student">Student sam</option>
+                        <option value="not_student">Nisam student</option>
+                    </select>
+                    <button class="btn btn-primary mt-2" onclick="showNextQuestion('question1', 'question2')">Submit</button>
+                </div>
+                
+                <div id="question2" class="mb-3" style="display: none;"> <!-- Ako nije na faksu onda struku da odabere -->
+                    <label for="answer2" class="form-label">Pitanje 2 (ako je na faksu): Odaberite svoj fakultet.</label>
+                    <select class="form-select" id="answer2">
+                        <option value="faks1">TVZ</option>
+                        <option value="faks2">FER</option>
+                        <option value="faks3">PMF</option>
+                        <option value="faks4">FSB</option>
+                    </select>
+                    <button class="btn btn-primary mt-2" onclick="showNextQuestion('question2', 'question3')">Submit</button>
+                </div>
+                <!-- Add more questions as needed -->
+                <div id="question3" class="mb-3" style="display: none;">
+                    <label for="answer3" class="form-label">Pitanje 3: Što želite pretražiti?</label>
+                    <select class="form-select" id="answer3">
+                        <option value="fakultet">Fakultet</option>
+                        <option value="posao">Posao</option>
+                        <option value="praksa">Praksa</option>
+                    </select>
+                    <button class="btn btn-primary mt-2" onclick="showNextQuestion('question3', 'question4')">Submit</button>
+                </div>
+                <!-- Add more questions as needed -->
+                <!-- You can continue adding questions like this -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showNextQuestion(currentQuestionId, nextQuestionId) {
+            var currentQuestion = document.getElementById(currentQuestionId);
+            var nextQuestion = document.getElementById(nextQuestionId);
+            
+            if (currentQuestionId === 'question3') {
+                window.location.href = '../search/search.html'; 
+            } else {
+                currentQuestion.style.display = "none";
+                nextQuestion.style.display = "block";
+            }
+        }
+    </script>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

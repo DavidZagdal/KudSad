@@ -76,3 +76,10 @@ body {
     border: 1px solid #28a745;
 }
 
+
+/* Override Bootstrap table styles */
+.table-dark {
+    background-color: #181818; /* Background color */
+    color: white; /* Text color */
+}
+

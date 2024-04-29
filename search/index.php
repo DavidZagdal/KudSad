@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>KudSad</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="../main-css-for-pages.css">
+    <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
 
     <style>
          .scrolling-container {
@@ -27,21 +28,16 @@
 </head>
 <body>
     <div id="toolbarContainer">
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var toolbarContainer = document.getElementById("toolbarContainer");
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    toolbarContainer.innerHTML = this.responseText;
+        <?php
+        if(isset($_COOKIE['logininfo'])){
+                    $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
+                    echo $toolbar_content;
+                }else{
+                    $toolbar_content = file_get_contents("../toolbar/toolbar.html");
+                    echo $toolbar_content;
                 }
-            };
-            xhttp.open("GET", "../toolbar/toolbar.html", true);
-            xhttp.send();
-        });
-    </script>
+    ?>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

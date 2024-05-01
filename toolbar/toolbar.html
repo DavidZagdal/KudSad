@@ -38,7 +38,24 @@
     box-shadow: 0 0 10px #28a74642; 
     border-radius: 50%;
     }
-    
+
+    .left-nav{
+        margin-left: 35vw; 
+    }
+
+    .padding-left{
+        padding-left: 0px;
+    }
+
+    @media (max-width: 991px) {
+            .left-nav{
+                margin-left: 0; 
+            }
+            .padding-left{
+        padding-left: 10px;
+    }
+
+        }
 
     </style>
 
@@ -55,14 +72,17 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="../login/">Login</a>
+            <ul class="navbar-nav left-nav">
+                <li class="nav-item border border-success rounded m-sm-1 padding-left">
+                    <a class="nav-link " href="../login/">Login</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item border border-success rounded m-sm-1 padding-left">
                     <a class="nav-link" href="../about/">About</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item border border-success rounded m-sm-1 padding-left">
+                    <a class="nav-link" href="../help/">FAQ</a>
+                </li>
+                <li class="nav-item border border-success rounded m-sm-1 padding-left">
                     <a class="nav-link" href="../homepage/">Home</a>
                 </li>
             </ul>

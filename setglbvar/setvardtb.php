@@ -28,5 +28,5 @@
     
     
     
-    header("Location: ../login");
+    header("Location: ../homepage/");
 ?>

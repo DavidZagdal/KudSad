@@ -1,3 +1,10 @@
+<?php 
+    //https://www.careerjet.com.hr/
+
+
+
+?>
+
 <?php
     session_start();
     if(!isset($_SESSION['servername'])) {
@@ -73,7 +80,7 @@
                     <div class="container">
                         <div class="row text-center">
                             <div class="col-md-4 mb-3"> 
-                                <button class="btn btn-success btn-block"  onclick="window.location.href='../posao/'">Posao</button>
+                                <button class="btn btn-success btn-block" onclick="window.location.href='../homepage/'">Home</button>
                             </div>
                             <div class="col-md-4 mb-3"> 
                                 <button class="btn btn-success btn-block" onclick="window.location.href='../prebacivanje-fakulteta/index.php'">Prebacivanje smjerova</button>
@@ -89,55 +96,10 @@
 
             <div class="card mt-3 flex-grow-1" >
                 <div class="card-body container-fluid">
-                    
                     <?php
-                        $servername = $_SESSION['servername'];
-                        $username = $_SESSION['username'];
-                        $password = $_SESSION['password'];
-                        $database = $_SESSION['database'];
-
-                        if(isset($_COOKIE["id_smjera"])) {
-                            $id_smjera = $_COOKIE["id_smjera"];
-
-                            $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        
-                            
-                            $stmt = $conn->query("SELECT * FROM fakultet JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet");
-                            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                            $fakultet = "";
-                            $smjer = "";
-
-                            foreach ($result as $row) {
-                                if(htmlspecialchars($row['id_smjer']) == $id_smjera){
-                                    $fakultet = htmlspecialchars($row['ime_fakulteta']);
-                                    $smjer = htmlspecialchars($row['ime_smjer']);
-                                }
-                            }
-
-
-                            echo '
-                            <div class="container-fluid mb-2">
-                                <h1 class="card-text text-center">'.$fakultet.'</h1>
-                                <h2 class="card-text text-center">'.$smjer.'</h2>
-                            </div>
-                            ';
-                        }else{
-                            echo '
-                            <div class="container-fluid mb-2">
-                                <h1 class="card-text text-center">Nema zabilježena prijava na faks.</h1>
-                                <p class="card-text text-center">Ukoliko želite možete odabrati neki drugi fakultet i vidjeti njegove opcije.</p>
-                            </div>
-                            ';
-                        }
-                    ?>
-
-                    
-                    <?php
-                        if(isset($_COOKIE["link_stranica"])) {
+                        if(isset($_COOKIE["link_posao"])) {
                             echo '<div class="container if-cont overflow-hidden">
-                                <iframe src="'.$_COOKIE["link_stranica"].'"></iframe>
+                                <iframe src="'.$_COOKIE["link_posao"].'"></iframe>
                             </div>';                 
 
                         }else{
@@ -146,7 +108,6 @@
                             </div>';
                         }
                     ?>
-
                 </div>
 
                 

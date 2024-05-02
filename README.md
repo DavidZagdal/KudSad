@@ -28,15 +28,15 @@ Zbog AAI@EduHr autentikacije, odlučili smo kupiti domenu kudsad.site. Nakon tog
 
 ## Detalji o različitim dijelovima aplikacije
 
+### Primarne tehnologije / načini korišteni:
+- php
+- html (bootstrap5)
+- css
+- sql
+
 ### about
 
 U ovoj mapi je stranica u kojoj je naveden opis web aplikacije i njenih funkcionalnosti te tima koji ju je izgradio.
-
-Primarne tehnologije / načini korišteni:
--html
--bootstrap
--font awesome (strelice)
--php (minimalno)
 
 ### erasecookies
 
@@ -44,8 +44,6 @@ U ovoj mapi je stranica koja ima funkcionalnost brisanja kolačića.
 
 Kada korisnik u toolbaru pritisne logout, onda ce se prvo ići u file erasecookie.php koji je u ovom folderu. On će izbrisati sve lokalne cookiese koje je korisnik s vremenom dobio.
 
-Primarne tehnologije / načini korišteni:
--php
 
 ```php
     setcookie("id_smjera", "", time() - 1, "/"); //stavljanje svakog postavljenog cookiea na 1 sekundu prije nego sto istekne, brisajuci ga
@@ -60,6 +58,7 @@ Pokušaj korištenja drugih fontova. Deprecated.
 Upute za korištenje aplikacije i kontakt informacije za podršku te privacy i cookie policies.
 
 Privacy i cookie policy rađeni na Termly stranicu. Rađeni su da bi dobili od AAI@EduHr sustava potvrdu.
+
 
 ### homepage
 
@@ -82,15 +81,15 @@ Trenutačno postoji login koji radi s bazom podataka, ali ne vidimo smisao proš
 Mapa procesa odabira fakulteta i smjerova na web stranici.
 
 Datoteke:
--filter.php
-  -jos nije u funkciji međutim jednostavno se koristi php skripta i ispisuje samo oni koji podudaraju
--index.php
-  -glavna stranica koja prikazuje tablicu svih smjerova fakulteta te opciju brisanja prošlih odabira
--izbrisiCookies.php
-  -kada se na index.php stisne Reset gumb pokrenuti će se ova skripta koja će uglavnom izbrisati sve cookiese OSIM login info, koji nam koristi za verifikaciju korisnika
--saveToCookie.php
-  -kada korisnik na index.php odabere opciju Spremi nakon odabira smjera, pokreće se ova skripta koja sprema cookiese id_smjera te trazi linkove za posao i linkove stranice tog fakulteta, ako već toga nema u bazi podataka
-  -koristi se google search api za pronalazak i spremanje podataka linkova
+- filter.php
+  - jos nije u funkciji međutim jednostavno se koristi php skripta i ispisuje samo oni koji podudaraju
+- index.php
+  - glavna stranica koja prikazuje tablicu svih smjerova fakulteta te opciju brisanja prošlih odabira
+- izbrisiCookies.php
+  - kada se na index.php stisne Reset gumb pokrenuti će se ova skripta koja će uglavnom izbrisati sve cookiese OSIM login info, koji nam koristi za verifikaciju korisnika
+- saveToCookie.php
+  - kada korisnik na index.php odabere opciju Spremi nakon odabira smjera, pokreće se ova skripta koja sprema cookiese id_smjera te trazi linkove za posao i linkove stranice tog fakulteta, ako već toga nema u bazi podataka
+  - koristi se google search api za pronalazak i spremanje podataka linkova
 
 Primjer veze google search API-a:
 ```php

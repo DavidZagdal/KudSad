@@ -2,7 +2,7 @@
 
 ## Uvod
 
-Ova web aplikacija je razvijena korištenjem XAMPP alata koji uključuje Apache web server i MySQL bazu podataka. Kako bismo testirali funkcionalnosti lokalno, koristili smo XAMPP okruženje prije nego što smo se odlučili hostanje web aplikacije.
+Ova web aplikacija je razvijena korištenjem XAMPP alata koji uključuje Apache web server i MySQL bazu podataka. Kako bismo testirali funkcionalnosti lokalno, koristili smo XAMPP okruženje prije nego što smo se odlučili na hostanje web aplikacije.
 
 Zbog AAI@EduHr autentikacije, odlučili smo kupiti domenu kudsad.site. Nakon toga, koristimo domain.com za hosting naše web stranice. Prvo testiramo promjene lokalno, a zatim ih prenosimo na glavnu stranicu putem FTP-a.
 

@@ -1,4 +1,5 @@
 <?php
+    //pokretanje sesije i provjeravanje da li je postavljena varijabla koja je potrebna za pokretanje veze s bazom podataka
     session_start();
     if(!isset($_SESSION['servername'])) {
         header("Location: ../setglbvar/setvardtb.php");
@@ -45,6 +46,7 @@
     </style>
 </head>
 <body>
+    <!-- pomocu php-a ispisujem prog. kod. toolbara, te ima dvije opcije, ako je korisnik ulogiran i ako nije -->
     <div id="toolbarContainer">
             <?php
                 if(isset($_COOKIE['logininfo'])){
@@ -95,8 +97,8 @@
                         $username = $_SESSION['username'];
                         $password = $_SESSION['password'];
                         $database = $_SESSION['database'];
-
-                        if(isset($_COOKIE["id_smjera"])) {
+                        //spajanje na bazu i izvlacenje podataka o svim fakultetima, povezano sa JOIN sa smjerovima
+                        if(isset($_COOKIE["id_smjera"])) {//ovdje ulazi samo ako je odabran neki smjer, ili ako ulogirani korisnik ima smjer
                             $id_smjera = $_COOKIE["id_smjera"];
 
                             $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
@@ -110,13 +112,13 @@
                             $smjer = "";
 
                             foreach ($result as $row) {
-                                if(htmlspecialchars($row['id_smjer']) == $id_smjera){
+                                if(htmlspecialchars($row['id_smjer']) == $id_smjera){//trazi korisnikov smjer, ovo kasnije u sql-u samo provjeriti da on vrati jedno, a ne gledati kroz sve
                                     $fakultet = htmlspecialchars($row['ime_fakulteta']);
                                     $smjer = htmlspecialchars($row['ime_smjer']);
                                 }
                             }
-
-
+                            
+                            
                             echo '
                             <div class="container-fluid mb-2">
                                 <h1 class="card-text text-center">'.$fakultet.'</h1>
@@ -135,7 +137,7 @@
 
                     
                     <?php
-                        if(isset($_COOKIE["link_stranica"])) {
+                        if(isset($_COOKIE["link_stranica"])) {//ako je postavljen cookie, sto znaci da taj fakultet ima svoj homepage, napravi iframe toga 
                             echo '<div class="container if-cont overflow-hidden">
                                 <iframe src="'.$_COOKIE["link_stranica"].'"></iframe>
                             </div>';                 

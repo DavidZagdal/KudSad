@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+    <!-- Objasnjenje u homepage.php -->
     <div id="toolbarContainer">
         <?php
             if(isset($_COOKIE['logininfo'])){

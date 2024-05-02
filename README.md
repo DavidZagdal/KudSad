@@ -30,43 +30,43 @@ Zbog AAI@EduHr autentikacije, odlučili smo kupiti domenu kudsad.site. Nakon tog
 
 ## Detalji o različitim dijelovima aplikacije
 
-### About
+### about
 
 U ovoj mapi je stranica u kojoj je naveden opis web aplikacije i njenih funkcionalnosti te tima koji ju je izgradio.
 
-### Erasecookies
+### rrasecookies
 
 U ovoj mapi je stranica koja ima funkcionalnost brisanja kolačića.
 
-### Font
+### font
 
 Pokušaj korištenja drugih fontova. Deprecated.
 
-### Help
+### help
 
 Upute za korištenje aplikacije i kontakt informacije za podršku te privacy i cookie policies.
 
-### Homepage
+### homepage
 
 Mapa početne stranice.
 
-### Images
+### images
 
 Korištene slike na web stranici.
 
-### Login
+### login
 
 Mapa sa funkcionalnostima prijave korisnika.
 
-### Odabir fakulteta
+### odabir-fakulteta
 
 Mapa procesa odabira fakulteta i smjerova na web stranici.
 
-### Posao
+### posao
 
 Mapa koja se odnosi na poslovne ponude.
 
-### Prebacivanje fakulteta
+### prebacivanje-fakulteta
 
 Mapa funkcionalnosti prebacivanja smjerova na fakultetima.
 
@@ -78,19 +78,19 @@ Mapa funkcionalnosti pretrage na web stranici.
 
 Mapa procesa postavljanja globalnih varijabli.
 
-### Svi smjerovi
+### svi-smjerovi
 
 Pregled svih dostupnih smjerova na fakultetima. Ne prikazuje se na stranici.
 
-### Tablica fakulteta
+### tablica-fakulteta
 
 Prikaz tablice sa svim fakultetima i njihovim detaljima. Ne prikazuje se na stranici.
 
-### Toolbar
+### toolbar
 
 Mapa trake s toolbarom koje se koristi na svim stranicama.
 
-### Wizard
+### wizard
 
 Mapa čarobnjaka za postavljanje korisničkog profila. Deprecated.
 

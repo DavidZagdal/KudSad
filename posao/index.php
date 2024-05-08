@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="../main-css-for-pages.css">
     <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
+
+    <script src="https://kit.fontawesome.com/90b9bb8c8d.js" crossorigin="anonymous"></script>
     <style>
         body{
             overflow: hidden;
@@ -60,6 +62,21 @@
             overflow: auto; 
         }
         }
+
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background-color: green;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        
 
         
     </style>
@@ -134,9 +151,16 @@
                                     echo '<div class="container if-cont overflow-hidden">
                                         <iframe src="'.$_COOKIE["link_posao"].'"></iframe>
                                     </div>';                 
-
+                                    
+                                    echo '<button class="floating-button" onclick="openTab(\'';
+                                        if(isset($_COOKIE["link_posao"])) {
+                                            echo $_COOKIE["link_posao"];
+                                        }
+                                        echo '\')">';
+                                        echo '<i class="fa-solid fa-arrow-up-right-from-square"></i>';
+                                        echo '</button>';
                                 }else{
-                                    echo '<div class="container text-center">
+                                    echo '<div class="container">
                                         <p>Odaberite fakultet</p>
                                     </div>';
                                 }
@@ -148,7 +172,11 @@
                                     echo '<div class="container if-cont overflow-hidden">
                                         <iframe src="'.$_COOKIE["link_mojPosao"].'"></iframe>
                                     </div>';                 
-
+                                    echo '<button  class="floating-button" onclick="openTab(\'';
+                                        if(isset($_COOKIE["link_mojPosao"])) {
+                                            echo $_COOKIE["link_mojPosao"];
+                                        }
+                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
                                 }else{
                                     echo '<div class="container text-center">
                                         <p>Stiže uskoro!</p>
@@ -162,7 +190,11 @@
                                     echo '<div class="container if-cont overflow-hidden">
                                         <iframe src="'.$_COOKIE["link_posaoHR"].'"></iframe>
                                     </div>';                 
-
+                                    echo '<button  class="floating-button" onclick="openTab(\'';
+                                        if(isset($_COOKIE["link_posaoHR"])) {
+                                            echo $_COOKIE["link_posaoHR"];
+                                        }
+                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
                                 }else{
                                     echo '<div class="container text-center">
                                         <p>Stiže uskoro!</p>
@@ -176,7 +208,11 @@
                                     echo '<div class="container if-cont overflow-hidden">
                                         <iframe src="'.$_COOKIE["link_CareerJet"].'"></iframe>
                                     </div>';                 
-
+                                    echo '<button  class="floating-button" onclick="openTab(\'';
+                                        if(isset($_COOKIE["link_CareerJet"])) {
+                                            echo $_COOKIE["link_CareerJet"];
+                                        }
+                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
                                 }else{
                                     echo '<div class="container text-center">
                                         <p>Stiže uskoro!</p>
@@ -197,7 +233,12 @@
         </div>
     </div>
     
-
+    
+    <script>
+        function openTab(link) {
+            window.location.href = link;
+        }
+    </script>
 
 </body>
 </html>

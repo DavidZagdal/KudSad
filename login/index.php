@@ -36,7 +36,7 @@
                             <h5 class="card-title text-center">Dobrodošli</h5>
                             <p class="card-text text-center">Molimo prijavite se:</p>
                             <div class="d-grid gap-2">
-                                <button class="btn btn-primary" type="button" onclick="window.location.href='login-page.php'">Prijava preko AAIEDU sustava</button>
+                                <button class="btn btn-primary" type="button" onclick="window.location.href='login-page.php'">Prijava / Registracija</button>
                             </div>
                         </div>
                     </div>

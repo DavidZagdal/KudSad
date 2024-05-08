@@ -29,6 +29,10 @@
             cursor: pointer;
         }
 
+        td{
+            width: 33%;
+        }
+
         tr:nth-child(even) {
             background-color: #212121;
         }
@@ -90,13 +94,18 @@
         <div class="card">
             <div class="card-body container-fluid">
                 <div class="row">
-                    <div class="col-md-1 col-sm-12 mb-sm-3">
-                        <form action="filter.php" method="GET">
-                        
-                            <button type="submit" class="btn-success btn">Filter</button>
+                    <div class="col-md-12 col-sm-12 mb-sm-3">
+                        <form action="#" method="GET">
+                            <label for="ime_fakulteta" class="form-label">Ime fakulteta:</label>
+                            <input type="text" id="ime_fakulteta" name="ime_fakulteta" class="form-control">
+
+                            <label for="ime_smjera" class="form-label">Ime smjera:</label>
+                            <input type="text" id="ime_smjera" name="ime_smjera" class="form-control">
+
+                            <button type="submit" class="btn-success btn mt-3" >Filter</button>
                         </form>
                     </div>
-                    <div class="col-md-1 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
                         <form action="izbrisiCookies.php" method="POST">
                         
                             <button type="submit" class="btn-success btn">Reset</button>
@@ -128,52 +137,76 @@
 </html>
 
 <?php
+    $ime_smjera = "";
+    $ime_fakulteta = "";
+
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if(isset($_GET['ime_fakulteta'])) {
+            $ime_fakulteta = $_GET['ime_fakulteta'];
+        }
+        if(isset($_GET['ime_smjera'])) {
+            $ime_smjera = $_GET['ime_smjera'];
+        }
+    }
+    
     $servername = $_SESSION['servername'];
     $username = $_SESSION['username'];
     $password = $_SESSION['password'];
     $database = $_SESSION['database'];
-   
+    
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->query("SELECT * FROM fakultet JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet");
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $conn->query("SELECT * FROM fakultet JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet");
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $whatToEcho = "";
+        $whatToEcho = "";
 
-    $whatToEcho .= '<div class="table-responsive">';
-    $whatToEcho .= '<table class="table-bordered table-hover table-dark">';
-    $whatToEcho .= '<thead class="thead-dark">';
-    $whatToEcho .= '<tr>';
-    $whatToEcho .= '<th scope="col">Ime fakulteta</th>';
-    $whatToEcho .= '<th scope="col">Ime Smjera</th>';
-    $whatToEcho .= '<th scope="col">Deskripcija smjera</th>';
-    $whatToEcho .= '<th scope="col" class="hidden-column">id smjera</th>';
-    $whatToEcho .= '</tr>';
-    $whatToEcho .= '</thead>';
-    $whatToEcho .= '<tbody>';
+        $whatToEcho .= '<div class="table-responsive">';
+        $whatToEcho .= '<table class="table-bordered table-hover table-dark">';
+        $whatToEcho .= '<thead class="thead-dark">';
+        $whatToEcho .= '<tr>';
+        $whatToEcho .= '<th scope="col">Ime fakulteta</th>';
+        $whatToEcho .= '<th scope="col">Ime Smjera</th>';
+        $whatToEcho .= '<th scope="col">Deskripcija smjera</th>';
+        $whatToEcho .= '<th scope="col" class="hidden-column">id smjera</th>';
+        $whatToEcho .= '</tr>';
+        $whatToEcho .= '</thead>';
+        $whatToEcho .= '<tbody>';
 
-    foreach ($result as $row) {
+        
+        foreach ($result as $row) {
+            if(str_contains(htmlspecialchars($row['ime_smjer']), $ime_smjera) && str_contains(htmlspecialchars($row['ime_fakulteta']), $ime_fakulteta)){
+                $whatToEcho = printData($whatToEcho, $row);
+            }
+        }
+        
+        $whatToEcho .= '</tbody>';
+        $whatToEcho .= '</table>';
+        $whatToEcho .= '</div>';
+
+        echo "<script>document.getElementById('data-table').innerHTML = '" . addslashes($whatToEcho) . "';</script>";
+    } catch (PDOException $e) {
+
+    }
+
+    $conn = null;
+    
+
+
+    function printData($whatToEcho, $row){
         $whatToEcho .= '<tr onclick="selectRow(this,'.htmlspecialchars($row['id_smjer']).')">';
         $whatToEcho .= '<td>' . htmlspecialchars($row['ime_fakulteta']) . '</td>';
         $whatToEcho .= '<td>' . htmlspecialchars($row['ime_smjer']) . '</td>';
         $whatToEcho .= '<td>' . htmlspecialchars($row['opis_smjer']) . '</td>';
         $whatToEcho .= '<td class="hidden-column">' . htmlspecialchars($row['id_smjer']) . '</td>';
         $whatToEcho .= '</tr>';
+
+        return $whatToEcho;
     }
-
-    $whatToEcho .= '</tbody>';
-    $whatToEcho .= '</table>';
-    $whatToEcho .= '</div>';
-
-    echo "<script>document.getElementById('data-table').innerHTML = '" . addslashes($whatToEcho) . "';</script>";
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-
-$conn = null;
+    
 ?>
 
 <script>

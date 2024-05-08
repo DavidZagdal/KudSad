@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="../main-css-for-pages.css">
     <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
+
+    <script src="https://kit.fontawesome.com/90b9bb8c8d.js" crossorigin="anonymous"></script>
     <style>
         body{
             overflow: hidden;
@@ -51,6 +53,19 @@
             height: 40vh; 
             overflow: auto; 
         }
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background-color: green;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
         }
 
         
@@ -159,15 +174,22 @@
                             </div>';
                         }
                     ?>
-
                 </div>
 
                 
             </div>
         </div>
     </div>
-    
+    <button class="floating-button" onclick="openTab()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
 
-
+    <script>
+        function openTab() {
+            var cookieValue = "<?php echo isset($_COOKIE['link_stranica']) ? $_COOKIE['link_stranica'] : ''; ?>";
+            if (cookieValue !== "") {
+                window.location.href = cookieValue;
+            }
+        }
+    </script>
 </body>
 </html>
+

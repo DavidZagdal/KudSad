@@ -8,6 +8,12 @@
     
     <link rel="stylesheet" href="../main-css-for-pages.css">
     <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
+    <style>
+        .form-control::placeholder { 
+            color: white;
+            opacity: 0.3;
+        }
+    </style>
 </head>
 <body>
     <div id="toolbarContainer">
@@ -23,41 +29,32 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-
-        <?php
-        
-            if (isset($_GET['wrong'])) {
-                
-                if ($_GET['wrong'] == 'True') {
-                    echo '<script>
-                      alert("Nije pronaden korisnik ili su uneseni krivi podatci.");
-                    </script>';
-                }
-            }
-        ?>
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Dobrodošli</h5>
-                    <p class="card-text text-center">Molimo unesite svoj email i lozinku:</p>
-                    <form action="login-temp.php" method="post">
+                    <h5 class="card-title text-center">Registrirajte se</h5>
+                    <p class="card-text text-center"></p>
+                    <form action="" method="POST">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email adresa:</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <label for="fullName" class="form-label">Ime i prezime</label>
+                            <input type="name" class="form-control" id="fullName" placeholder="npr. Ivan Horvat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Lozinka:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <label for="email" class="form-label">Email Adresa</label>
+                            <input type="email" class="form-control" id="email" placeholder="npr. ihorvat@gmail.com" required>
                         </div>
-                        <div class="d-grid">
-                            <button class="btn btn-primary" type="submit">Prijavi se</button>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Lozinka</label>
+                            <input type="password" class="form-control" id="password" placeholder="Unesite lozinku" required>
                         </div>
-                        <div class="d-grid mt-3" style="text-align: right;">
-                            <p>Nemate račun? <a href="register.php" style="color:#28a745"> Registrirajte se ovdje.</a></p>
-                            
+                        <div class="mb-4">
+                            <label for="confirmPassword" class="form-label">Potvrdite Lozinku</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Ponovno unesite lozinku" required>
+                        </div>
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </form>
                 </div>

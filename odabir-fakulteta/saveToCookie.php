@@ -37,12 +37,13 @@
                             $linkstranica = htmlspecialchars($row['link_stranica']);
                             $linkposao = htmlspecialchars($row['link_posao']);
                             $ime_smjera = htmlspecialchars($row['ime_smjer']);
+                            $imefakulteta = htmlspecialchars($row['ime_fakulteta']);
                             $titula = htmlspecialchars($row['titula']);
                         }
                     }
 
 
-                    if($titula != ""){
+                    /*if($titula != ""){
                         $bacc = $titula;
                         setcookie("bacc", $bacc, time() + (86400 * 30), "/");
                     }else{
@@ -55,13 +56,15 @@
                         }else{
                             setcookie("bacc", "error", time() + (86400 * 30), "/");
                         }
-                    }
+                    }*/
                     
-
+                    echo $linkstranica;
                     if($linkstranica != ""){
                         setcookie("link_stranica", $linkstranica, time() + (86400 * 30), "/");
                     }else{
                         $thisLink = searchGoogleFirstPage($imefakulteta);
+                        echo 'usao';
+                        echo $thisLink;
                         setcookie("link_stranica", $thisLink, time() + (86400 * 30), "/");
                         saveStranicaLinkToDatabase($thisLink, $smjerId);
                     }
@@ -75,7 +78,7 @@
                     }
 
                 } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
+
                 }
                 
             }
@@ -148,13 +151,13 @@
 
         curl_close($curl);
 
+
         $results = json_decode($response, true);
 
         $firstLink = "";
         if(isset($results['items'][0]['link'])) {
             $firstLink = $results['items'][0]['link'];
         } 
-
         return $firstLink;
 
 

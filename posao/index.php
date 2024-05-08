@@ -38,7 +38,20 @@
             height: 60vh; 
             overflow: auto; 
         }
+        .nav-tabs {
+            background-color: #282828;
+            color: #FFFFFF;
+            border-bottom: 0px solid #28a745;
+        }
 
+        .nav-tabs .nav-link {
+            color: #FFFFFF;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
 
 
         @media (max-width: 800px) {
@@ -94,24 +107,93 @@
                 </div>
             </div>
 
-            <div class="card mt-3 flex-grow-1" >
+            <div class="card mt-3 flex-grow-1">
                 <div class="card-body container-fluid">
-                    <?php
-                        if(isset($_COOKIE["link_posao"])) {
-                            echo '<div class="container if-cont overflow-hidden">
-                                <iframe src="'.$_COOKIE["link_posao"].'"></iframe>
-                            </div>';                 
+                    <ul class="nav nav-tabs mb-3" id="myTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Vaš Fakultet</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">MojPosao</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">posao.hr</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">CareerJet</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Za Vas</button>
+                        </li>
+                    </ul>
 
-                        }else{
-                            echo '<div class="container text-center">
-                                <p>Odaberite fakultet</p>
-                            </div>';
-                        }
-                    ?>
+                    <div class="tab-content" id="myTabsContent">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                            <?php
+                                if(isset($_COOKIE["link_posao"])) {
+                                    echo '<div class="container if-cont overflow-hidden">
+                                        <iframe src="'.$_COOKIE["link_posao"].'"></iframe>
+                                    </div>';                 
+
+                                }else{
+                                    echo '<div class="container text-center">
+                                        <p>Odaberite fakultet</p>
+                                    </div>';
+                                }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                            <?php
+                                if(isset($_COOKIE["link_mojPosao"])) {
+                                    echo '<div class="container if-cont overflow-hidden">
+                                        <iframe src="'.$_COOKIE["link_mojPosao"].'"></iframe>
+                                    </div>';                 
+
+                                }else{
+                                    echo '<div class="container text-center">
+                                        <p>Stiže uskoro!</p>
+                                    </div>';
+                                }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                            <?php
+                                if(isset($_COOKIE["link_posaoHR"])) {
+                                    echo '<div class="container if-cont overflow-hidden">
+                                        <iframe src="'.$_COOKIE["link_posaoHR"].'"></iframe>
+                                    </div>';                 
+
+                                }else{
+                                    echo '<div class="container text-center">
+                                        <p>Stiže uskoro!</p>
+                                    </div>';
+                                }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                            <?php
+                                if(isset($_COOKIE["link_CareerJet"])) {
+                                    echo '<div class="container if-cont overflow-hidden">
+                                        <iframe src="'.$_COOKIE["link_CareerJet"].'"></iframe>
+                                    </div>';                 
+
+                                }else{
+                                    echo '<div class="container text-center">
+                                        <p>Stiže uskoro!</p>
+                                    </div>';
+                                }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                            <div class="container text-center">
+                                <p>Poslovni partneri za Vas!</p>
+                                <p>Stiže uskoro!</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                
             </div>
+
         </div>
     </div>
     

@@ -11,7 +11,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Studentski poslovni pomoćnik!">
+    <meta name="keywords" content="student, studenti, hrvatska, croatia, posao, hub, tražim, posao, fakultet, faks">
+    <meta name="author" content="Skibidi Piggies">
     <title>KudSad</title>
+
+    <meta property="og:title" content="KudSad">
+    <meta property="og:description" content="Studentski poslovni pomoćnik">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.kudsad.site">
+    <meta property="og:image" content="https://www.kudsad.site/images/KudSadLogo.png">
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="../main-css-for-pages.css">

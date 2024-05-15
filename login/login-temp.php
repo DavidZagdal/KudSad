@@ -8,6 +8,8 @@
 
 
 <?php 
+    include '../odabir-fakulteta/saveToCookie.php';
+
     $email = $_POST["email"];
     $password = $_POST["password"];
 
@@ -29,8 +31,7 @@
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            
-            if (sha1($_POST['password']) == $user['password']) {
+            if (hash('sha256', $_POST['password']) == $user['password']) {
 
             $email = $user['email']; 
             $id_smjera = $user['id_smjer'];

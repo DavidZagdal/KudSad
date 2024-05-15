@@ -178,7 +178,7 @@
 
         
         foreach ($result as $row) {
-            if(str_contains(htmlspecialchars($row['ime_smjer']), $ime_smjera) && str_contains(htmlspecialchars($row['ime_fakulteta']), $ime_fakulteta)){
+            if(str_contains(strtolower(htmlspecialchars($row['ime_smjer'])), strtolower($ime_smjera)) && str_contains(strtolower(htmlspecialchars($row['ime_fakulteta'])), strtolower($ime_fakulteta))){
                 $whatToEcho = printData($whatToEcho, $row);
             }
         }

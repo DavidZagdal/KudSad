@@ -88,8 +88,9 @@
 
 
     function searchGoogleFirstPageSnippet($whatToSearch) {
-        $apiKey = ''; //maknuto za public git
-        $searchEngineId = ''; // maknuto za public git
+        require '../setglbvar/gapi.php';
+        $apiKey = getGAPI();
+        $searchEngineId = getSEI();
     
         $encoded = urlencode($whatToSearch);
         
@@ -124,8 +125,9 @@
     
 
     function searchGoogleFirstPage($whatToSearch) {
-        $apiKey = '';
-        $searchEngineId = '';
+        require '../setglbvar/gapi.php';
+        $apiKey = getGAPI();
+        $searchEngineId = getSEI();
 
         $encoded = urlencode($whatToSearch);
         

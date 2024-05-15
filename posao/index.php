@@ -1,10 +1,3 @@
-<?php 
-    //https://www.careerjet.com.hr/
-
-
-
-?>
-
 <?php
     session_start();
     if(!isset($_SESSION['servername'])) {
@@ -77,6 +70,20 @@
             cursor: pointer;
         }
         
+        a{
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .tab-pane .if-cont {
+            height: 60vh; 
+            overflow-y: hidden;
+        }
+
+        .tab-pane.show .if-cont {
+            overflow-y: auto;
+        }
 
         
     </style>
@@ -137,9 +144,6 @@
                             <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">posao.hr</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">CareerJet</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Za Vas</button>
                         </li>
                     </ul>
@@ -167,22 +171,21 @@
                             ?>
                         </div>
                         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                            <?php
-                                if(isset($_COOKIE["link_mojPosao"])) {
-                                    echo '<div class="container if-cont overflow-hidden">
-                                        <iframe src="'.$_COOKIE["link_mojPosao"].'"></iframe>
-                                    </div>';                 
-                                    echo '<button  class="floating-button" onclick="openTab(\'';
-                                        if(isset($_COOKIE["link_mojPosao"])) {
-                                            echo $_COOKIE["link_mojPosao"];
-                                        }
-                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
-                                }else{
-                                    echo '<div class="container text-center">
-                                        <p>Stiže uskoro!</p>
-                                    </div>';
-                                }
-                            ?>
+                            <div class="container if-cont">
+                                <?php
+                                    if(isset($_COOKIE["link_posao"])) {
+                                        require '../scraper/scrape-functions.php';
+                                        $alljob = scrapeAndStoreDataMojPosao('Programer'); //ovdje kada se odabvere faks u cookie staviti kao "pretraga"
+                                        foreach($alljob as $job){
+                                            echo $job;
+                                        }               
+                                    }else{
+                                        echo '<div class="container text-center">
+                                            <p>Odaberite fakultet!</p>
+                                        </div>';
+                                    }
+                                ?>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                             <?php
@@ -193,24 +196,6 @@
                                     echo '<button  class="floating-button" onclick="openTab(\'';
                                         if(isset($_COOKIE["link_posaoHR"])) {
                                             echo $_COOKIE["link_posaoHR"];
-                                        }
-                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
-                                }else{
-                                    echo '<div class="container text-center">
-                                        <p>Stiže uskoro!</p>
-                                    </div>';
-                                }
-                            ?>
-                        </div>
-                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
-                            <?php
-                                if(isset($_COOKIE["link_CareerJet"])) {
-                                    echo '<div class="container if-cont overflow-hidden">
-                                        <iframe src="'.$_COOKIE["link_CareerJet"].'"></iframe>
-                                    </div>';                 
-                                    echo '<button  class="floating-button" onclick="openTab(\'';
-                                        if(isset($_COOKIE["link_CareerJet"])) {
-                                            echo $_COOKIE["link_CareerJet"];
                                         }
                                     echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
                                 }else{
@@ -236,7 +221,7 @@
     
     <script>
         function openTab(link) {
-            window.location.href = link;
+            window.open(link, '_blank');
         }
     </script>
 

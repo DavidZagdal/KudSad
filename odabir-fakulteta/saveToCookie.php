@@ -88,8 +88,8 @@
 
 
     function searchGoogleFirstPageSnippet($whatToSearch) {
-        $apiKey = 'AIzaSyApO6ij2qDPKa7UFyXKxwAwSSt8t5qGyS0';
-        $searchEngineId = 'f607880da84754171';
+        $apiKey = ''; //maknuto za public git
+        $searchEngineId = ''; // maknuto za public git
     
         $encoded = urlencode($whatToSearch);
         
@@ -124,8 +124,8 @@
     
 
     function searchGoogleFirstPage($whatToSearch) {
-        $apiKey = 'AIzaSyApO6ij2qDPKa7UFyXKxwAwSSt8t5qGyS0';
-        $searchEngineId = 'f607880da84754171';
+        $apiKey = '';
+        $searchEngineId = '';
 
         $encoded = urlencode($whatToSearch);
         

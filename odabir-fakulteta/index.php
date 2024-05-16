@@ -138,13 +138,8 @@
 <body>
     <div id="toolbarContainer">
         <?php
-            if(isset($_COOKIE['logininfo'])){
-                $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
-                echo $toolbar_content;
-            }else{
-                $toolbar_content = file_get_contents("../toolbar/toolbar.html");
-                echo $toolbar_content;
-            }
+            require '../toolbar/whatToolbarToUse.php';
+            echo whatToolbarToUse();
         ?>
     </div>
 

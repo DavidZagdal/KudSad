@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $output = ob_get_contents();
         file_put_contents("../errors/errors.txt", $output, FILE_APPEND);
         ob_end_clean();
+        header("Location: register.php?wrong=True");
     }
 
     $conn = null;

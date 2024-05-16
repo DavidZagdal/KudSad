@@ -90,15 +90,10 @@
 <body>
     
     <div id="toolbarContainer">
-            <?php
-                if(isset($_COOKIE['logininfo'])){
-                    $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
-                    echo $toolbar_content;
-                }else{
-                    $toolbar_content = file_get_contents("../toolbar/toolbar.html");
-                    echo $toolbar_content;
-                }
-            ?>
+        <?php
+            require '../toolbar/whatToolbarToUse.php';
+            echo whatToolbarToUse();
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

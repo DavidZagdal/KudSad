@@ -35,6 +35,8 @@
 
             $email = $user['email']; 
             $id_smjera = $user['id_smjer'];
+            $id_tempuser = $user['id_tempuser'];
+            $_SESSION['id_tempuser'] = $id_tempuser;
 
             $encrypted = sha1($email.' '.sha1($_POST['password']));
 

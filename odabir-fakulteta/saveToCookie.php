@@ -5,6 +5,7 @@
     }
     
     require '../setglbvar/gapi.php';
+    require 'izbrisiCookies.php'
 ?>
 
 
@@ -12,11 +13,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["smjerId"])) {
             //delete cookies
-            setcookie("id_smjera", "", time() - 1, "/");
-            setcookie("id_drugog_smjera", "", time() - 1, "/");
-            setcookie("link_stranica", "", time() - 1, "/");
-            setcookie("link_posao", "", time() - 1, "/");
-            setcookie("no-jobs", "", time() - 1, "/");
+            destroy_cookies();
 
             $smjerId = $_POST["smjerId"];
                 setcookie("id_smjera", $smjerId, time() + (86400 * 30), "/");
@@ -52,7 +49,7 @@
                             $id_tip = htmlspecialchars($row['id_tip_posla']);
                         }
                     }
-
+                    saveIdToUser($smjerId);
 
                     /*if($titula != ""){
                         $bacc = $titula;
@@ -254,6 +251,35 @@
             
             $stmt->bindParam(':idSmjer', $idSmjer, PDO::PARAM_INT);
             $stmt->bindParam(':titula', $titula, PDO::PARAM_STR);
+            
+            $stmt->execute();
+            
+            $conn = null;
+            
+        } catch(PDOException $e) {
+        }
+    }
+
+    function saveIdToUser($idSmjer){
+        try {
+            $servername = $_SESSION['servername'];
+            $username = $_SESSION['username'];
+            $password = $_SESSION['password'];
+            $database = $_SESSION['database'];
+
+            $userID = $_SESSION['id_tempuser'];
+            
+            $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+            $stmt = $conn->prepare("
+                UPDATE tempuser
+                SET id_smjer = :id_smjer
+                WHERE id_tempuser = :id_tempuser
+            ");
+            
+            $stmt->bindParam(':id_tempuser', $userID, PDO::PARAM_INT);
+            $stmt->bindParam(':id_smjer', $idSmjer, PDO::PARAM_STR);
             
             $stmt->execute();
             

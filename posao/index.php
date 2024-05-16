@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     if(!isset($_SESSION['servername'])) {
         header("Location: ../setglbvar/setvardtb.php");
     }
@@ -70,11 +72,38 @@
             cursor: pointer;
         }
         
-        a{
+        a, .title{
             color: #28a745;
             text-decoration: none;
             font-weight: bold;
+            display: inline-block;
+            position: relative;
         }
+
+
+        a.effect-underline:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            display: inline-block;
+            height: 1em;
+            width: 100%;
+            border-bottom: 1px solid;
+            margin-top: 10px;
+            opacity: 0;
+            -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+            transition: opacity 0.35s, transform 0.35s;
+            -webkit-transform: scale(0,1);
+            transform: scale(0,1);
+        }
+
+        a.effect-underline:hover:after {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+
 
         .tab-pane .if-cont {
             height: 60vh; 
@@ -82,7 +111,35 @@
         }
 
         .tab-pane.show .if-cont {
-            overflow-y: auto;
+            overflow-y: scroll;
+            scrollbar-color: #28a745 #181818;
+            scrollbar-width: thin;
+        }
+
+      
+
+        p{
+            color: #FFFFFF;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        @keyframes shadow-animation {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        .hover-custom {
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .hover-custom:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
         }
 
         
@@ -91,13 +148,17 @@
 <body>
     <div id="toolbarContainer">
             <?php
-                if(isset($_COOKIE['logininfo'])){
-                    $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
-                    echo $toolbar_content;
-                }else{
-                    $toolbar_content = file_get_contents("../toolbar/toolbar.html");
-                    echo $toolbar_content;
-                }
+            
+            require '../scraper/scrape-functions.php';
+            require '../find-keyword/find-keyword.php';
+
+            if(isset($_COOKIE['logininfo'])){
+                $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
+                echo $toolbar_content;
+            }else{
+                $toolbar_content = file_get_contents("../toolbar/toolbar.html");
+                echo $toolbar_content;
+            }
             ?>
     </div>
 
@@ -173,42 +234,58 @@
                         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                             <div class="container if-cont">
                                 <?php
-                                    if(isset($_COOKIE["link_posao"])) {
-                                        require '../scraper/scrape-functions.php';
-                                        $alljob = scrapeAndStoreDataMojPosao('Programer'); //ovdje kada se odabvere faks u cookie staviti kao "pretraga"
-                                        foreach($alljob as $job){
-                                            echo $job;
-                                        }               
+                                    if(!isset($_COOKIE["no-jobs"])) {
+                                        $imePosla = getImeTipaPosla($_COOKIE['id_smjera']);
+                                        if($imePosla!= ''){
+                                            $allJob = scrapeAndStoreDataMojPosao($imePosla); //ovdje kada se odabvere faks u cookie staviti kao "pretraga"
+                                            foreach($allJob as $job){
+                                                echo $job;
+                                            }  
+                                            $allJob = []; 
+                                        }else{
+                                            echo '<div class="container text-center">
+                                                <p>Za ovaj smjer nema kompetitivnih poslova</p>
+                                            </div>';
+                                        }
+                                                 
                                     }else{
                                         echo '<div class="container text-center">
-                                            <p>Odaberite fakultet!</p>
+                                            <p>Za ovaj smjer nema kompetitivnih poslova</p>
                                         </div>';
                                     }
                                 ?>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                            <?php
-                                if(isset($_COOKIE["link_posaoHR"])) {
-                                    echo '<div class="container if-cont overflow-hidden">
-                                        <iframe src="'.$_COOKIE["link_posaoHR"].'"></iframe>
-                                    </div>';                 
-                                    echo '<button  class="floating-button" onclick="openTab(\'';
-                                        if(isset($_COOKIE["link_posaoHR"])) {
-                                            echo $_COOKIE["link_posaoHR"];
+                            <div class="container if-cont">
+                                <?php
+                                    if(!isset($_COOKIE["no-jobs"])) {
+                                        $imePosla = getImeTipaPosla($_COOKIE['id_smjera']);
+                                        if($imePosla!= ''){
+                                            $allJob = scrapeAndStoreDataPosaoHr($imePosla);
+                                            foreach($allJob as $job){
+                                                echo $job;
+                                            }  
+                                            $allJob = []; 
+                                        }else{
+                                            echo '<div class="container text-center">
+                                                <p>Za ovaj smjer nema kompetitivnih poslova</p>
+                                            </div>';
                                         }
-                                    echo '\')"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>';
-                                }else{
-                                    echo '<div class="container text-center">
-                                        <p>Stiže uskoro!</p>
-                                    </div>';
-                                }
-                            ?>
+                                                 
+                                    }else{
+                                        echo '<div class="container text-center">
+                                            <p>Za ovaj smjer nema kompetitivnih poslova</p>
+                                        </div>';
+                                    }
+                                ?>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
                             <div class="container text-center">
                                 <p>Poslovni partneri za Vas!</p>
-                                <p>Stiže uskoro!</p>
+                                <p>Funkcionalnost stiže kada izađe finalna verzija aplikacije.</p>
+                                <p>Partneri će se prijaviti te moći staviti oglase direktno na ovu stranicu.</p>
                             </div>
                         </div>
                     </div>

@@ -3,12 +3,21 @@
     if(!isset($_SESSION['servername'])) {
         header("Location: ../setglbvar/setvardtb.php");
     }
+    
+    require '../setglbvar/gapi.php';
 ?>
 
 
 <?php 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["smjerId"])) {
+            //delete cookies
+            setcookie("id_smjera", "", time() - 1, "/");
+            setcookie("id_drugog_smjera", "", time() - 1, "/");
+            setcookie("link_stranica", "", time() - 1, "/");
+            setcookie("link_posao", "", time() - 1, "/");
+            setcookie("no-jobs", "", time() - 1, "/");
+
             $smjerId = $_POST["smjerId"];
                 setcookie("id_smjera", $smjerId, time() + (86400 * 30), "/");
                 
@@ -21,7 +30,12 @@
                     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
                     
-                    $stmt = $conn->query("SELECT * FROM fakultet JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet");
+                    $stmt = $conn->query("
+                        SELECT fakultet.*, smjer.*, tip_posla.ime_tip_posla AS ime_tip_posla 
+                        FROM fakultet
+                        JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet
+                        LEFT JOIN tip_posla ON smjer.id_tip_posla = tip_posla.id_tip_posla
+                    ");
                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     $linkstranica = "";
@@ -35,7 +49,7 @@
                             $linkposao = htmlspecialchars($row['link_posao']);
                             $ime_smjera = htmlspecialchars($row['ime_smjer']);
                             $imefakulteta = htmlspecialchars($row['ime_fakulteta']);
-                            $titula = htmlspecialchars($row['titula']);
+                            $id_tip = htmlspecialchars($row['id_tip_posla']);
                         }
                     }
 
@@ -54,6 +68,10 @@
                             setcookie("bacc", "error", time() + (86400 * 30), "/");
                         }
                     }*/
+
+                    if($id_tip == 0){
+                        findTipAndSave($smjerId, $ime_smjera, $conn);
+                    }
                     
                     echo $linkstranica;
                     if($linkstranica != ""){
@@ -88,7 +106,6 @@
 
 
     function searchGoogleFirstPageSnippet($whatToSearch) {
-        require '../setglbvar/gapi.php';
         $apiKey = getGAPI();
         $searchEngineId = getSEI();
     
@@ -125,7 +142,7 @@
     
 
     function searchGoogleFirstPage($whatToSearch) {
-        require '../setglbvar/gapi.php';
+
         $apiKey = getGAPI();
         $searchEngineId = getSEI();
 
@@ -257,6 +274,34 @@
             return $matches[1];
         } else {
             return null; 
+        }
+    }
+
+    function findTipAndSave($smjerId, $imeSmjera, $conn) {
+        try {
+            $stmt = $conn->query("SELECT id_tip_posla, ime_tip_posla FROM tip_posla");
+            $tipoviPosla = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $found = 0;
+
+            foreach ($tipoviPosla as $tip) {
+                $imeTipa = $tip['ime_tip_posla'];
+                if (stripos($imeSmjera, $imeTipa) !== false && strlen($imeTipa) >= 5 || stripos($imeTipa, $imeSmjera) !== false && strlen($imeSmjera) >= 5) {
+                    $idTipPosla = $tip['id_tip_posla'];
+    
+                    $updateStmt = $conn->prepare("UPDATE smjer SET id_tip_posla = :idTipPosla WHERE id_smjer = :idSmjer");
+                    $updateStmt->bindParam(':idTipPosla', $idTipPosla, PDO::PARAM_INT);
+                    $updateStmt->bindParam(':idSmjer', $smjerId, PDO::PARAM_INT);
+                    $updateStmt->execute();
+                    $found = 1;
+                    break;
+                }
+            }
+            if($found == 0){
+                setcookie("no-jobs", 'true', time() + (86400 * 30), "/");
+            }
+        } catch (PDOException $e) {
+            echo "Greška: " . $e->getMessage();
         }
     }
 

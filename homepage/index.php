@@ -186,7 +186,7 @@
         function openTab() {
             var cookieValue = "<?php echo isset($_COOKIE['link_stranica']) ? $_COOKIE['link_stranica'] : ''; ?>";
             if (cookieValue !== "") {
-                window.location.href = cookieValue;
+                window.open(cookieValue, '_blank');
             }
         }
     </script>

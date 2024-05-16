@@ -16,35 +16,54 @@
     <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
 
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+
+        .container {
+            margin-top: 20px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #242424 !important;
+            color: #28a745 !important;
+            border-bottom: 2px solid #28a745;
+        }
+
+        td {
+            background-color: #1e1e1e !important;
+            border-bottom: 1px solid #28a745;
+        }
+
+        tr:hover td {
+            background-color: #333 !important;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #2a2a2a !important;
+        }
+
+        tr.highlight, tr.highlight td {
+            background-color: #28a745 !important;
+            color: #fff;
+        }
+
+        tr.highlight:hover, tr.highlight:hover td {
+            background-color: #28a745 !important;
+            color: #fff;
+        }
+
 
         .hidden-column {
             display: none;
-        }
-
-        tr {
-            cursor: pointer;
-        }
-
-        td{
-            width: 33%;
-        }
-
-        tr:nth-child(even) {
-            background-color: #212121;
-        }
-
-        .highlight {
-            background-color: green;
-            color: white;
-        }
-
-        tr.highlight {
-            background-color: green;
-            color: white;
         }
 
         .floating-button {
@@ -52,15 +71,20 @@
             bottom: 20px;
             right: 20px;
             z-index: 9999;
-            background-color: green;
+            background-color: #28a745;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             color: white;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .floating-choice{
+        .floating-button:hover {
+            background-color: #218838;
+        }
+
+        .floating-choice {
             position: fixed;
             text-align: center;
             bottom: 3px;
@@ -68,24 +92,60 @@
             z-index: 9999;
             background-color: #242424;
             padding: 10px 20px;
-            border: none;
+            border: 1px solid #28a745;
             border-radius: 5px;
             color: white;
             cursor: pointer;
+        }
+
+        .card {
+            background-color: #242424;
+            border: 1px solid #28a745;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838 !important; 
+        }
+
+        .form-control {
+            background-color: #181818;
+            color: #fff;
+            border: 1px solid #333;
+            box-shadow: none !important;
+        }
+
+        .form-control:focus {
+            background-color: #181818;
+            color: #fff;
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-label {
+            color: #ccc;
+            background-color: #242424;
         }
     </style>
 </head>
 <body>
     <div id="toolbarContainer">
-            <?php
-                if(isset($_COOKIE['logininfo'])){
-                    $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
-                    echo $toolbar_content;
-                }else{
-                    $toolbar_content = file_get_contents("../toolbar/toolbar.html");
-                    echo $toolbar_content;
-                }
-            ?>
+        <?php
+            if(isset($_COOKIE['logininfo'])){
+                $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
+                echo $toolbar_content;
+            }else{
+                $toolbar_content = file_get_contents("../toolbar/toolbar.html");
+                echo $toolbar_content;
+            }
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -102,19 +162,15 @@
                             <label for="ime_smjera" class="form-label">Ime smjera:</label>
                             <input type="text" id="ime_smjera" name="ime_smjera" class="form-control">
 
-                            <button type="submit" class="btn-success btn mt-3" >Filter</button>
+                            <button type="submit" class="btn-success btn mt-3">Filter</button>
                         </form>
                     </div>
                     <div class="col-md-12 col-sm-12">
                         <form action="izbrisiCookies.php" method="POST">
-                        
                             <button type="submit" class="btn-success btn">Reset</button>
                         </form>
                     </div>
-                
-                
                 </div>
-                
             </div>
         </div>
 
@@ -125,14 +181,12 @@
         </div>
     </div>
 
-
-
     <p id="selected-row-data" class="floating-choice border border-success"></p>
     
     <button class="floating-button" onclick="saveToCookie()">Spremi</button>
     <form id="saveForm" method="post" action="saveToCookie.php">
-    <input type="hidden" id="smjerId" name="smjerId">
-</form>
+        <input type="hidden" id="smjerId" name="smjerId">
+    </form>
 </body>
 </html>
 
@@ -165,7 +219,7 @@
         $whatToEcho = "";
 
         $whatToEcho .= '<div class="table-responsive">';
-        $whatToEcho .= '<table class="table-bordered table-hover table-dark">';
+        $whatToEcho .= '<table class="table table-bordered table-hover table-dark">';
         $whatToEcho .= '<thead class="thead-dark">';
         $whatToEcho .= '<tr>';
         $whatToEcho .= '<th scope="col">Ime fakulteta</th>';
@@ -176,7 +230,6 @@
         $whatToEcho .= '</thead>';
         $whatToEcho .= '<tbody>';
 
-        
         foreach ($result as $row) {
             if(str_contains(strtolower(htmlspecialchars($row['ime_smjer'])), strtolower($ime_smjera)) && str_contains(strtolower(htmlspecialchars($row['ime_fakulteta'])), strtolower($ime_fakulteta))){
                 $whatToEcho = printData($whatToEcho, $row);
@@ -189,12 +242,10 @@
 
         echo "<script>document.getElementById('data-table').innerHTML = '" . addslashes($whatToEcho) . "';</script>";
     } catch (PDOException $e) {
-
+        echo "Connection failed: " . $e->getMessage();
     }
 
     $conn = null;
-    
-
 
     function printData($whatToEcho, $row){
         $whatToEcho .= '<tr onclick="selectRow(this,'.htmlspecialchars($row['id_smjer']).')">';
@@ -206,7 +257,6 @@
 
         return $whatToEcho;
     }
-    
 ?>
 
 <script>
@@ -232,6 +282,5 @@ function saveToCookie() {
     } else {
         alert("Prvo odaberite red u tablici.");
     }
-
 }
 </script>

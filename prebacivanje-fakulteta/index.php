@@ -14,6 +14,78 @@
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="../main-css-for-pages.css">
     <link rel="icon" type="../image/png" href="../images/favicon-32x32.png">
+
+    <style>
+
+        .container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #242424 !important;
+            color: #28a745 !important;
+            border-bottom: 2px solid #28a745;
+        }
+
+        td {
+            background-color: #1e1e1e !important;
+            border-bottom: 1px solid #28a745;
+        }
+
+        tr:hover td {
+            background-color: #333 !important;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #2a2a2a !important;
+        }
+
+        tr.highlight, tr.highlight td {
+            background-color: #28a745 !important;
+            color: #fff;
+        }
+
+        tr.highlight:hover, tr.highlight:hover td {
+            background-color: #28a745 !important;
+            color: #fff;
+        }
+
+
+        .hidden-column {
+            display: none;
+        }
+
+
+        .card {
+            background-color: #242424;
+            border: 1px solid #28a745;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838 !important; 
+        }
+
+
+    </style>
 </head>
 <body>
     

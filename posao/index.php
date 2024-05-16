@@ -123,7 +123,7 @@ if (!isset($_SESSION['servername'])) {
                 box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
             }
             100% {
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 1);
             }
         }
 

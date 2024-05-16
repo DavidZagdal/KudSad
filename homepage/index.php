@@ -1,9 +1,10 @@
 <?php
-    //pokretanje sesije i provjeravanje da li je postavljena varijabla koja je potrebna za pokretanje veze s bazom podataka
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
-    if(!isset($_SESSION['servername'])) {
-        header("Location: ../setglbvar/setvardtb.php");
-    }
+}
+if (!isset($_SESSION['servername'])) {
+    header("Location: ../setglbvar/setvardtb.php");
+}
 ?>
 
 <!DOCTYPE html>

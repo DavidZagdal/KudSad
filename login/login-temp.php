@@ -1,14 +1,16 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
-    if(!isset($_SESSION['servername'])) {
-        header("Location: ../setglbvar/setvardtb.php");
-    }
+}
+if (!isset($_SESSION['servername'])) {
+    header("Location: ../setglbvar/setvardtb.php");
+}
 ?>
 
 
 
 <?php 
-    include '../odabir-fakulteta/saveToCookie.php';
+    //include '../odabir-fakulteta/saveToCookie.php';
 
     $email = $_POST["email"];
     $password = $_POST["password"];
@@ -36,7 +38,7 @@
             $email = $user['email']; 
             $id_smjera = $user['id_smjer'];
             $id_tempuser = $user['id_tempuser'];
-            $_SESSION['id_tempuser'] = $id_tempuser;
+            $_SESSION['id_tempuser'] = $id_tempuser.'';
 
             $encrypted = sha1($email.' '.sha1($_POST['password']));
 

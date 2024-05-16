@@ -12,6 +12,24 @@
         .nolink{
             text-decoration: none;
         }
+
+        @keyframes shadow-animation {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+            }
+        }
+
+        .hover-custom {
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .hover-custom:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+        }
     </style>
 </head>
 <body>
@@ -26,7 +44,7 @@
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card border border-success">
                     <div class="card-body ">
                         <h3 class="card-title text-center">FAQ</h3>
                         <p class="card-text text-center text-white-50">Pozdrav, ako ste zbunjeni kako koristiti stranicu ovdje se nalaze svi odgovori.</p>
@@ -35,7 +53,7 @@
             </div>
 
             <div class="col-md-12 mt-3">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#prvi">
                             <h5 class="card-title text-center">1. Čemu služi ova stranica? <i class="fa-solid fa-caret-down"></i></h5>
@@ -55,7 +73,7 @@
     <div class="container mb-5">
 
             <div class="col-md-12 mt-3">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#drugi">
                             <h5 class="card-title text-center">2. Gdje je gumb za registraciju?<i class="fa-solid fa-caret-down"></i></h5>
@@ -73,7 +91,7 @@
     <div class="container mb-5">
 
         <div class="col-md-12 mt-3">
-            <div class="card">
+            <div class="card hover-custom">
                 <div class="card-body">
                     <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#treci">
                         <h5 class="card-title text-center">3. Prijavio sam se što sada?<i class="fa-solid fa-caret-down"></i></h5>
@@ -91,7 +109,7 @@
 <div class="container mb-5">
 
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#cetvrti">
                     <h5 class="card-title text-center">4. Što ako se želimo prebaciti s jednog smjera na drugi smjer?<i class="fa-solid fa-caret-down"></i></h5>
@@ -108,7 +126,7 @@
 <div class="container mb-5">
 
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#peti">
                     <h5 class="card-title text-center">5. Zanima me koji posao mogu imati s stečenim zanimanjem?<i class="fa-solid fa-caret-down"></i></h5>
@@ -126,7 +144,7 @@
 <div class="container mb-5">
 
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#sesti">
                     <h5 class="card-title text-center">6. Kako da brzo vidim stranicu svog fakulteta?<i class="fa-solid fa-caret-down"></i></h5>
@@ -144,7 +162,7 @@
 <div class="container mb-5">
 
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#sedmi">
                     <h5 class="card-title text-center">7. Zanima Vas tko smo mi I zašto ovo radimo?<i class="fa-solid fa-caret-down"></i></h5>
@@ -163,7 +181,7 @@
 <div class="container mb-5">
 
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#osmi">
                     <h5 class="card-title text-center">8. Zanima Vas koje podatke skupljamo?<i class="fa-solid fa-caret-down"></i></h5>
@@ -180,7 +198,7 @@
 
 <div class="container mb-5">
     <div class="col-md-12 mt-3">
-        <div class="card">
+        <div class="card hover-custom">
             <div class="card-body">
                 <div>
                     <h5 class="card-title text-center">9. Niste pronašli odgovor na svoje pitanje?</h5>

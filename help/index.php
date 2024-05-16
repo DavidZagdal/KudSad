@@ -12,6 +12,23 @@
         .nolink{
             text-decoration: none;
         }
+        @keyframes shadow-animation {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+            }
+        }
+
+        .hover-custom {
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .hover-custom:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+        }
     </style>
 </head>
 <body>
@@ -36,7 +53,7 @@
             </div>
 
             <div class="col-md-12 mt-3">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#privacyPolicy">
                             <h5 class="card-title text-center">Privacy policy <i class="fa-solid fa-caret-down"></i></h5>
@@ -56,7 +73,7 @@
     <div class="container mb-5">
 
             <div class="col-md-12 mt-3">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="" style="text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#cookiePolicy">
                             <h5 class="card-title text-center">Cookie policy <i class="fa-solid fa-caret-down"></i></h5>

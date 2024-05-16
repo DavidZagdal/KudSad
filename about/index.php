@@ -12,6 +12,23 @@
         .nolink{
             text-decoration: none;
         }
+        @keyframes shadow-animation {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+            }
+        }
+
+        .hover-custom {
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .hover-custom:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+        }
     </style>
 </head>
 <body>
@@ -51,7 +68,7 @@
 
         <div class="row justify-content-center">
             <div class="col-md-4 mt-5">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="#" class="nolink" data-bs-toggle="collapse" data-bs-target="#simunDetails">
                             <h5 class="card-title text-center">Šimun Polimanac <i class="fa-solid fa-caret-down"></i></h5>
@@ -67,7 +84,7 @@
             </div>
 
             <div class="col-md-4 mt-5">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="#" class="nolink" data-bs-toggle="collapse" data-bs-target="#aldoDetails">
                             <h5 class="card-title text-center">Aldo Šarunić <i class="fa-solid fa-caret-down"></i></h5>
@@ -83,7 +100,7 @@
             </div>
 
             <div class="col-md-4 mt-5">
-                <div class="card">
+                <div class="card hover-custom">
                     <div class="card-body">
                         <a href="#" class="nolink " data-bs-toggle="collapse" data-bs-target="#davidDetails">
                             <h5 class="card-title text-center">David Gulić <i class="fa-solid fa-caret-down"></i></h5>

@@ -1,10 +1,10 @@
 <?php
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    if(!isset($_SESSION['servername'])) {
-        header("Location: ../setglbvar/setvardtb.php");
-    }
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['servername'])) {
+    header("Location: ../setglbvar/setvardtb.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +20,10 @@
 
     <script src="https://kit.fontawesome.com/90b9bb8c8d.js" crossorigin="anonymous"></script>
     <style>
-        body{
+        body {
             overflow: hidden;
         }
-        
+
         iframe {
             border: none;
             height: 100%;
@@ -31,10 +31,11 @@
             overflow: hidden;
         }
 
-        .if-cont{
-            height: 60vh; 
-            overflow: auto; 
+        .if-cont {
+            height: 60vh;
+            overflow: auto;
         }
+
         .nav-tabs {
             background-color: #282828;
             color: #FFFFFF;
@@ -50,14 +51,12 @@
             border-color: #28a745;
         }
 
-
         @media (max-width: 800px) {
-            .if-cont{
-            height: 40vh; 
-            overflow: auto; 
+            .if-cont {
+                height: 40vh;
+                overflow: auto;
+            }
         }
-        }
-
 
         .floating-button {
             position: fixed;
@@ -71,15 +70,14 @@
             color: white;
             cursor: pointer;
         }
-        
-        a, .title{
+
+        a, .title {
             color: #28a745;
             text-decoration: none;
             font-weight: bold;
             display: inline-block;
             position: relative;
         }
-
 
         a.effect-underline:after {
             content: '';
@@ -103,10 +101,8 @@
             transform: scale(1);
         }
 
-
-
         .tab-pane .if-cont {
-            height: 60vh; 
+            height: 60vh;
             overflow-y: hidden;
         }
 
@@ -116,9 +112,7 @@
             scrollbar-width: thin;
         }
 
-      
-
-        p{
+        p {
             color: #FFFFFF;
             font-size: 1rem;
             line-height: 1.5;
@@ -142,53 +136,62 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 1);
         }
 
-        
+        #loading-tab3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #28a745;
+        }
+
+        .spinner-border {
+            margin-left: 10px;
+        }
+
+        #tab3-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="toolbarContainer">
-            <?php
-            
-            require '../scraper/scrape-functions.php';
-            require '../find-keyword/find-keyword.php';
+        <?php
+        require '../scraper/scrape-functions.php';
+        require '../find-keyword/find-keyword.php';
 
-            if(isset($_COOKIE['logininfo'])){
-                $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
-                echo $toolbar_content;
-            }else{
-                $toolbar_content = file_get_contents("../toolbar/toolbar.html");
-                echo $toolbar_content;
-            }
-            ?>
+        if (isset($_COOKIE['logininfo'])) {
+            $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");
+            echo $toolbar_content;
+        } else {
+            $toolbar_content = file_get_contents("../toolbar/toolbar.html");
+            echo $toolbar_content;
+        }
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="d-flex flex-column vh-100">
-        <div class="container" >
+        <div class="container">
             <div class="card">
                 <div class="card-body container-fluid">
-                    
-                    
                     <div class="container-fluid mb-2">
                         <p class="card-text text-center">Nakon odabira fakulteta će se prikazati više podataka.</p>
                     </div>
-                    
 
                     <div class="container">
                         <div class="row text-center">
-                            <div class="col-md-4 mb-3"> 
+                            <div class="col-md-4 mb-3">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='../homepage/'">Home</button>
                             </div>
-                            <div class="col-md-4 mb-3"> 
+                            <div class="col-md-4 mb-3">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='../prebacivanje-fakulteta/index.php'">Prebacivanje smjerova</button>
                             </div>
-                            <div class="col-md-4 mb-3"> 
+                            <div class="col-md-4 mb-3">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='../odabir-fakulteta/index.php'">Fakultet</button>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
 
@@ -202,7 +205,7 @@
                             <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">MojPosao</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">posao.hr</button>
+                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false" onclick="loadTab3Content()">posao.hr</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Za Vas</button>
@@ -212,73 +215,58 @@
                     <div class="tab-content" id="myTabsContent">
                         <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                             <?php
-                                if(isset($_COOKIE["link_posao"])) {
-                                    echo '<div class="container if-cont overflow-hidden">
-                                        <iframe src="'.$_COOKIE["link_posao"].'"></iframe>
-                                    </div>';                 
-                                    
-                                    echo '<button class="floating-button" onclick="openTab(\'';
-                                        if(isset($_COOKIE["link_posao"])) {
-                                            echo $_COOKIE["link_posao"];
-                                        }
-                                        echo '\')">';
-                                        echo '<i class="fa-solid fa-arrow-up-right-from-square"></i>';
-                                        echo '</button>';
-                                }else{
-                                    echo '<div class="container">
-                                        <p>Odaberite fakultet</p>
-                                    </div>';
+                            if (isset($_COOKIE["link_posao"])) {
+                                echo '<div class="container if-cont overflow-hidden">
+                                    <iframe src="' . $_COOKIE["link_posao"] . '"></iframe>
+                                </div>';
+
+                                echo '<button class="floating-button" onclick="openTab(\'';
+                                if (isset($_COOKIE["link_posao"])) {
+                                    echo $_COOKIE["link_posao"];
                                 }
+                                echo '\')">';
+                                echo '<i class="fa-solid fa-arrow-up-right-from-square"></i>';
+                                echo '</button>';
+                            } else {
+                                echo '<div class="container">
+                                    <p>Odaberite fakultet</p>
+                                </div>';
+                            }
                             ?>
                         </div>
                         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                             <div class="container if-cont">
                                 <?php
-                                    if(!isset($_COOKIE["no-jobs"])) {
-                                        $imePosla = getImeTipaPosla($_COOKIE['id_smjera']);
-                                        if($imePosla!= ''){
-                                            $allJob = scrapeAndStoreDataMojPosao($imePosla); //ovdje kada se odabvere faks u cookie staviti kao "pretraga"
-                                            foreach($allJob as $job){
-                                                echo $job;
-                                            }  
-                                            $allJob = []; 
-                                        }else{
-                                            echo '<div class="container text-center">
-                                                <p>Za ovaj smjer nema kompetitivnih poslova</p>
-                                            </div>';
+                                if (!isset($_COOKIE["no-jobs"])) {
+                                    $imePosla = getImeTipaPosla($_COOKIE['id_smjera']);
+                                    if ($imePosla != '') {
+                                        $allJob = scrapeAndStoreDataMojPosao($imePosla); //ovdje kada se odabvere faks u cookie staviti kao "pretraga"
+                                        foreach ($allJob as $job) {
+                                            echo $job;
                                         }
-                                                 
-                                    }else{
+                                        $allJob = [];
+                                    } else {
                                         echo '<div class="container text-center">
                                             <p>Za ovaj smjer nema kompetitivnih poslova</p>
                                         </div>';
                                     }
+                                } else {
+                                    echo '<div class="container text-center">
+                                        <p>Za ovaj smjer nema kompetitivnih poslova</p>
+                                    </div>';
+                                }
                                 ?>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                             <div class="container if-cont">
-                                <?php
-                                    if(!isset($_COOKIE["no-jobs"])) {
-                                        $imePosla = getImeTipaPosla($_COOKIE['id_smjera']);
-                                        if($imePosla!= ''){
-                                            $allJob = scrapeAndStoreDataPosaoHr($imePosla);
-                                            foreach($allJob as $job){
-                                                echo $job;
-                                            }  
-                                            $allJob = []; 
-                                        }else{
-                                            echo '<div class="container text-center">
-                                                <p>Za ovaj smjer nema kompetitivnih poslova</p>
-                                            </div>';
-                                        }
-                                                 
-                                    }else{
-                                        echo '<div class="container text-center">
-                                            <p>Za ovaj smjer nema kompetitivnih poslova</p>
-                                        </div>';
-                                    }
-                                ?>
+                                <div id="loading-tab3">
+                                    Učitavanje, molimo sačekajte par sekundi.
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <div id="tab3-content"></div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
@@ -291,16 +279,56 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-    
-    
+
     <script>
+        let tab3ContentLoaded = false;
+        let tab3Content = '';
+
+        function loadTab3Content() {
+            if (!tab3ContentLoaded) {
+                document.getElementById('loading-tab3').style.display = 'flex';
+                document.getElementById('tab3-content').style.display = 'none';
+                
+                setTimeout(function() {
+                    fetchTab3Content();
+                }, 0);
+            } else {
+                document.getElementById('tab3-content').style.display = 'block';
+            }
+        }
+
+        function fetchTab3Content() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'fetch_tab3_content.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    tab3Content = xhr.responseText;
+                    document.getElementById('tab3-content').innerHTML = tab3Content;
+                    document.getElementById('loading-tab3').style.display = 'none';
+                    document.getElementById('tab3-content').style.display = 'block';
+                    tab3ContentLoaded = true;
+                }
+            };
+            xhr.send('id_smjera=' + encodeURIComponent(getCookie('id_smjera')));
+        }
+
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
         function openTab(link) {
             window.open(link, '_blank');
         }
     </script>
-
 </body>
 </html>

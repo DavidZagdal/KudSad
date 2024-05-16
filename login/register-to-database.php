@@ -48,14 +48,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     } catch (PDOException $e) {
-        ob_start();
-        echo "file: register-to-database. Error: " . $e->getMessage();
-        echo "\n";
-        $output = ob_get_contents();
-        file_put_contents("../errors/errors.txt", $output, FILE_APPEND);
-        ob_end_clean();
+        $timestamp = date("Y-m-d H:i:s");
+        $logMessage = "[$timestamp] file: register-to-database.php. Error: " . $e->getMessage() . "\n";
+        file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         header("Location: register.php?wrong=True");
     }
+    
 
     $conn = null;
 }

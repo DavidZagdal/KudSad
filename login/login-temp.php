@@ -58,7 +58,9 @@ if (!isset($_SESSION['servername'])) {
             exit();
         }
     } catch (PDOException $e) {
-        
+        $timestamp = date("Y-m-d H:i:s");
+        $logMessage = "[$timestamp] file:login-temp.php. Error: " . $e->getMessage() . "\n";
+        file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
     }
 
 
@@ -99,6 +101,9 @@ if (!isset($_SESSION['servername'])) {
             }
 
         } catch (PDOException $e) {
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: login-temp.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
             header("Location: login-page.php?wrong=True");
         }
                 

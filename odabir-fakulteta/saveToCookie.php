@@ -92,7 +92,9 @@
                     }
 
                 } catch (PDOException $e) {
-
+                    $timestamp = date("Y-m-d H:i:s");
+                    $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+                    file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
                 }
             echo "Podaci su spremljeni u cookie.";
         } else {
@@ -202,7 +204,9 @@
             $conn = null;
             
         } catch(PDOException $e) {
-
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         }
     }
 
@@ -231,7 +235,9 @@
             $conn = null;
             
         } catch(PDOException $e) {
-            
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         }
     }
 
@@ -259,6 +265,9 @@
             $conn = null;
             
         } catch(PDOException $e) {
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         }
     }
 
@@ -288,6 +297,9 @@
             $conn = null;
             
         } catch(PDOException $e) {
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         }
     }
     
@@ -329,7 +341,9 @@
                 setcookie("no-jobs", 'true', time() + (86400 * 30), "/");
             }
         } catch (PDOException $e) {
-            echo "Greška: " . $e->getMessage();
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         }
     }
 

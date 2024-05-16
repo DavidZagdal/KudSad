@@ -239,7 +239,9 @@
 
         echo "<script>document.getElementById('data-table').innerHTML = '" . addslashes($whatToEcho) . "';</script>";
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        $timestamp = date("Y-m-d H:i:s");
+        $logMessage = "[$timestamp] file: odabir-fakulteta/index.php. Error: " . $e->getMessage() . "\n";
+        file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
     }
 
     $conn = null;

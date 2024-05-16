@@ -135,24 +135,26 @@
 
     <div class="container mb-5" id="logsContainer">
         <?php
-        $logFilePath = 'errors.txt';
+        $logFilePath = '../errors/errors.txt';
 
         $logs = file($logFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         $counter = 1;
 
         foreach ($logs as $log) {
-            preg_match('/file: (.*?). Error: (.*?)(?=\.\s|$)/', $log, $matches);
-            $where = $matches[1];
-            $what = $matches[2];
-            $details = substr($log, strpos($log, $matches[2]) + strlen($matches[2]) + 1);
+            preg_match('/\[(.*?)\] file: (.*?). Error: (.*?)(?=\.\s|$)/', $log, $matches);
+            $timestamp = $matches[1];
+            $where = $matches[2];
+            $what = $matches[3];
+            $details = substr($log, strpos($log, $matches[3]) + strlen($matches[3]) + 1);
         ?>
             <div class="col-md-12 mt-3 log-entry">
                 <div class="card hover-custom">
                     <div class="card-body">
                         <a href="#collapse<?= $counter ?>" style="text-decoration: none;" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse<?= $counter ?>">
-                            <h5 class="card-title text-center"><?= htmlspecialchars($where) ?></h5>
+                            <h6 class="card-title text-center"><?= htmlspecialchars($timestamp) ?></h6>
                             <h5 class="card-title text-center"><?= htmlspecialchars($what) ?></h5>
+                            <h6 class="card-title text-center text-white-50"><?= htmlspecialchars($where) ?></h6>
                         </a>
                     </div>
                 </div>

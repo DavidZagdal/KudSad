@@ -47,6 +47,9 @@ function saveEncryptedQuestion(){
         header("Location: faq.php?success=True");
         
     } catch(PDOException $e) {
+        $timestamp = date("Y-m-d H:i:s");
+        $logMessage = "[$timestamp] file: saveQuestionToDatabase.php. Error: " . $e->getMessage() . "\n";
+        file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         header("Location: faq.php?error=True");
     }
 }

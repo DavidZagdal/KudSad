@@ -154,6 +154,14 @@ if (!isset($_SESSION['servername'])) {
     </style>
 </head>
 <body>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                loadTab3Content();
+            });
+        </script>
+
     <div id="toolbarContainer">
         <?php
         require '../scraper/scrape-functions.php';
@@ -205,7 +213,7 @@ if (!isset($_SESSION['servername'])) {
                             <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">MojPosao</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false" onclick="loadTab3Content()">posao.hr</button>
+                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">posao.hr</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Za Vas</button>
@@ -309,6 +317,10 @@ if (!isset($_SESSION['servername'])) {
                     document.getElementById('tab3-content').innerHTML = tab3Content;
                     document.getElementById('loading-tab3').style.display = 'none';
                     document.getElementById('tab3-content').style.display = 'block';
+                    const links = document.querySelectorAll('a');
+                    links.forEach(function(link) {
+                        link.setAttribute('target', '_blank');
+                    });
                     tab3ContentLoaded = true;
                 }
             };
@@ -329,6 +341,16 @@ if (!isset($_SESSION['servername'])) {
         function openTab(link) {
             window.open(link, '_blank');
         }
+        
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a');
+            links.forEach(function(link) {
+                link.setAttribute('target', '_blank');
+            });
+        });
     </script>
 </body>
 </html>

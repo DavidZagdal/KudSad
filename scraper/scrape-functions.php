@@ -13,7 +13,9 @@ function scrapeAndStoreDataMojPosao($keyword) {
     $html = curl_exec($curl);
     
     if(curl_error($curl)) {
-        echo 'Error: ' . curl_error($curl);
+        $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . curl_error($curl) . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         return;
     }
     
@@ -51,7 +53,9 @@ function doLogicBehindScrapingPosaoHr($keyword, $stranica){
     $html = curl_exec($curl);
     
     if(curl_error($curl)) {
-        echo 'Error: ' . curl_error($curl);
+        $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . curl_error($curl) . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         return;
     }
     
@@ -94,7 +98,9 @@ function scrapeAndStoreDataPosaoHr($keyword) {
     $html = curl_exec($curl);
     
     if(curl_error($curl)) {
-        echo 'Error: ' . curl_error($curl);
+        $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . curl_error($curl) . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
         return;
     }
     

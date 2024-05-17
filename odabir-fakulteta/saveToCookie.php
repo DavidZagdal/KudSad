@@ -46,6 +46,7 @@
                         if(htmlspecialchars($row['id_smjer']) == $smjerId){
                             $linkstranica = htmlspecialchars($row['link_stranica']);
                             $linkposao = htmlspecialchars($row['link_posao']);
+                            $linkprijelaz = htmlspecialchars($row['link_prijelaz']);
                             $ime_smjera = htmlspecialchars($row['ime_smjer']);
                             $imefakulteta = htmlspecialchars($row['ime_fakulteta']);
                             $id_tip = htmlspecialchars($row['id_tip_posla']);
@@ -72,13 +73,10 @@
                         findTipAndSave($smjerId, $ime_smjera, $conn);
                     }
                     
-                    echo $linkstranica;
                     if($linkstranica != ""){
                         setcookie("link_stranica", $linkstranica, time() + (86400 * 30), "/");
                     }else{
                         $thisLink = searchGoogleFirstPage($imefakulteta);
-                        echo 'usao';
-                        echo $thisLink;
                         setcookie("link_stranica", $thisLink, time() + (86400 * 30), "/");
                         saveStranicaLinkToDatabase($thisLink, $smjerId);
                     }
@@ -89,6 +87,14 @@
                         $thisLink = searchGoogleFirstPage($imefakulteta.' posao');
                         setcookie("link_posao",$thisLink , time() + (86400 * 30), "/");
                         savePosaoLinkToDatabase($thisLink, $smjerId);
+                    }
+
+                    if($linkprijelaz != ""){
+                        setcookie("link_prijelaz", $linkprijelaz, time() + (86400 * 30), "/");
+                    }else{
+                        $thisLink = searchGoogleFirstPage($imefakulteta.' prijelaz');
+                        setcookie("link_prijelaz",$thisLink , time() + (86400 * 30), "/");
+                        savePrijelazLinkToDatabase($thisLink, $smjerId);
                     }
 
                 } catch (PDOException $e) {
@@ -123,7 +129,9 @@
         $response = curl_exec($curl);
     
         if(curl_errno($curl)) {
-            echo 'Error: ' . curl_error($curl);
+             $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . curl_error($curl) . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
             exit;
         }
     
@@ -160,7 +168,9 @@
         $response = curl_exec($curl);
 
         if(curl_errno($curl)) {
-            echo 'Error: ' . curl_error($curl);
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . curl_error($curl) . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
             exit;
         }
 
@@ -177,6 +187,7 @@
 
 
     }
+    
 
 
     function savePosaoLinkToDatabase($linkPosao, $idSmjer){
@@ -198,6 +209,38 @@
             
             $stmt->bindParam(':idSmjer', $idSmjer, PDO::PARAM_INT);
             $stmt->bindParam(':linkPosao', $linkPosao, PDO::PARAM_STR);
+            
+            $stmt->execute();
+            
+            $conn = null;
+            
+        } catch(PDOException $e) {
+            $timestamp = date("Y-m-d H:i:s");
+            $logMessage = "[$timestamp] file: saveToCookie.php. Error: " . $e->getMessage() . "\n";
+            file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
+        }
+    }
+
+
+    function savePrijelazLinkToDatabase($linkPrijelaz, $idSmjer){
+        try {
+            $servername = $_SESSION['servername'];
+            $username = $_SESSION['username'];
+            $password = $_SESSION['password'];
+            $database = $_SESSION['database'];
+            
+            $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+            $stmt = $conn->prepare("
+                UPDATE fakultet
+                JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet
+                SET fakultet.link_prijelaz = :linkPrijelaz
+                WHERE smjer.id_smjer = :idSmjer
+            ");
+            
+            $stmt->bindParam(':idSmjer', $idSmjer, PDO::PARAM_INT);
+            $stmt->bindParam(':linkPrijelaz', $linkPrijelaz, PDO::PARAM_STR);
             
             $stmt->execute();
             

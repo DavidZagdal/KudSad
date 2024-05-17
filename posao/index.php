@@ -216,26 +216,86 @@ require '../find-keyword/find-keyword.php';
 
                     <div class="tab-content" id="myTabsContent">
                         <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                            <?php
-                            if (isset($_COOKIE["link_posao"])) {
-                                echo '<div class="container if-cont overflow-hidden">
-                                    <iframe src="' . $_COOKIE["link_posao"] . '"></iframe>
-                                </div>';
+                            <div class="container if-cont overflow-hidden vh-custom">
+                                <div id="objectContainer" style="height: 100%; width: 100%;">
+                                </div>
+                            </div>
 
-                                echo '<button class="floating-button" onclick="openTab(\'';
-                                if (isset($_COOKIE["link_posao"])) {
-                                    echo $_COOKIE["link_posao"];
+                        <script>
+                            function loadObject(src, params, onLoaded, onError) {
+                                var obj = document.createElement('object');
+                                obj.style.display = 'block';
+                                obj.style.visibility = 'hidden'; 
+                                obj.style.width = '100%';
+                                obj.style.height = '100%';
+                                obj.data = src;
+
+                                obj.innerHTML = '<div class="vh-custom" style="height:100%; width: 100%; display: flex; justify-content: center;  flex-grow: 1;"><iframe src="failed-loading.html"></div>'; 
+
+                                for (var prop in params) {
+                                    if (params.hasOwnProperty(prop)) {
+                                        var param = document.createElement('param');
+                                        param.name = prop;
+                                        param.value = params[prop];
+                                        obj.appendChild(param);
+                                    }
                                 }
-                                echo '\')">';
-                                echo '<i class="fa-solid fa-arrow-up-right-from-square"></i>';
-                                echo '</button>';
-                            } else {
-                                echo '<div class="container">
-                                    <p>Odaberite fakultet</p>
-                                </div>';
+
+                                function isReallyLoaded(obj) {
+                                    return obj.offsetHeight !== 5; 
+                                }
+
+                                var isLoaded = false;
+
+                                obj.onload = function () {
+                                    if (!isLoaded) {
+                                        isLoaded = true;
+                                        if (isReallyLoaded(obj)) {
+                                            obj.style.visibility = 'visible'; 
+                                            onLoaded();
+                                        } else {
+                                            onError();
+                                        }
+                                    }
+                                };
+
+                                obj.onerror = function () {
+                                    if (!isLoaded) {
+                                        isLoaded = true;
+                                        onError();
+                                    }
+                                };
+
+                                function checkLoading() {
+                                    if (!isLoaded) {
+                                        if (obj.offsetHeight > 0) { 
+                                            if (isReallyLoaded(obj)) {
+                                                obj.style.visibility = 'visible'; 
+                                                onLoaded();
+                                            } else {
+                                                onError();
+                                            }
+                                        } else {
+                                            setTimeout(checkLoading, 100);
+                                        }
+                                    }
+                                }
+
+                                setTimeout(checkLoading, 100);
+
+                                document.getElementById('objectContainer').appendChild(obj);
                             }
-                            ?>
-                        </div>
+
+                            var src = "<?php echo isset($_COOKIE['link_posao']) ? $_COOKIE['link_posao'] : 'about:blank'; ?>";
+                            var params = {}; 
+
+                            loadObject(src, params, function() {
+                                console.log('Content loaded successfully.');
+                            }, function() {
+                                console.log('Failed to load content.');
+                            });
+                        </script>
+                    </div>
                         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                             <div class="container if-cont">
                                 <?php

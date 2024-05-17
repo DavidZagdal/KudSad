@@ -24,11 +24,15 @@
         .hover-custom {
             box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
+            transition: border 0.3s ease;
+            border: 1px solid transparent; 
         }
 
         .hover-custom:hover {
             box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+            border: 1px solid rgba(40, 167, 69, 1); 
         }
+        
     </style>
 </head>
 <body>
@@ -44,7 +48,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card border-success">
                     <div class="card-body">
                         <h3 class="card-title text-center">Policies</h3>
                         <p class="card-text text-center text-white-50">Ovdje se nalaze basic policies za stranicu.</p>

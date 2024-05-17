@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 if (!isset($_SESSION['servername'])) {
     header("Location: ../setglbvar/setvardtb.php");
 }
+require '../scraper/scrape-functions.php';
+require '../find-keyword/find-keyword.php';
 ?>
 
 <!DOCTYPE html>
@@ -309,7 +311,8 @@ if (!isset($_SESSION['servername'])) {
                     document.getElementById('tab3-content').innerHTML = tab3Content;
                     document.getElementById('loading-tab3').style.display = 'none';
                     document.getElementById('tab3-content').style.display = 'block';
-                    const links = document.querySelectorAll('a');
+                    
+                    const links = document.querySelectorAll('a:not(.not-external)');
                     links.forEach(function(link) {
                         link.setAttribute('target', '_blank');
                     });
@@ -338,6 +341,11 @@ if (!isset($_SESSION['servername'])) {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a');
+            links.forEach(function(link) {
+                link.setAttribute('target', '');
+            });
+
             const links = document.querySelectorAll('a:not(.not-external)');
             links.forEach(function(link) {
                 link.setAttribute('target', '_blank');

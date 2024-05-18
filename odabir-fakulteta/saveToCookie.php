@@ -103,11 +103,12 @@
                     file_put_contents("../errors/errors.txt", $logMessage, FILE_APPEND);
                 }
             echo "Podaci su spremljeni u cookie.";
+            header("Location: ../homepage/");
         } else {
             echo "Nema podataka za spremanje.";
         }
     } else {
-        echo "Nevažeći zahtjev.";
+        
     }
 
 
@@ -402,5 +403,5 @@
         }
     }*/
 
-    header("Location: ../homepage/");
+    
 ?>

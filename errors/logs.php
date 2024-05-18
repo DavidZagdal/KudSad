@@ -1,3 +1,15 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['servername'])) {
+    header("Location: ../setglbvar/setvardtb.php");
+}else if ((isset($_SESSION['status']) && $_SESSION['status'] != 'admin')) {
+    header("Location: ../customerrors/403.html");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

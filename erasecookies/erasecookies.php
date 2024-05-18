@@ -5,5 +5,13 @@
     setcookie("logininfo", "", time() - 1, "/");
     setcookie("link_stranica", "", time() - 1, "/");
     setcookie("link_posao", "", time() - 1, "/");
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION['status'])) {
+        $_SESSION['status'] = '';
+    }
+    
     header("Location: ../index.php");//ova linija skace na index.php glavne stranice, koji isto tako redirecta na homepage.php
 ?>

@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 if (!isset($_SESSION['servername'])) {
     header("Location: ../setglbvar/setvardtb.php");
 }
+
+require '../odabir-fakulteta/saveToCookie.php';
 ?>
 
 
@@ -35,17 +37,19 @@ if (!isset($_SESSION['servername'])) {
         if ($user) {
             if (hash('sha256', $_POST['password']) == $user['password']) {
 
-            $email = $user['email']; 
-            $id_smjera = $user['id_smjer'];
-            $id_tempuser = $user['id_tempuser'];
-            $_SESSION['id_tempuser'] = $id_tempuser.'';
+                $email = $user['email']; 
+                $id_smjera = $user['id_smjer'];
+                $id_tempuser = $user['id_tempuser'];
+                $status = $user['status'];
+                $_SESSION['id_tempuser'] = $id_tempuser.'';
+                $_SESSION['status'] = $status.'';
 
-            $encrypted = sha1($email.' '.sha1($_POST['password']));
+                $encrypted = sha1($email.' '.sha1($_POST['password']));
 
-            setcookie("logininfo", $encrypted, time() + (86400 * 30), "/");
-            setcookie("id_smjera", $id_smjera, time() + (86400 * 30), "/");
-            quickLogInSetup($id_smjera);
-            
+                setcookie("logininfo", $encrypted, time() + (86400 * 30), "/");
+                setcookie("id_smjera", $id_smjera, time() + (86400 * 30), "/");
+                quickLogInSetup($id_smjera);
+                
 
                 header("Location: ../homepage/index.php");
                 exit();

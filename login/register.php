@@ -13,6 +13,12 @@
             color: white;
             opacity: 0.3;
         }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
     </style>
 </head>
 <body>
@@ -62,6 +68,18 @@
                             <label for="confirmPassword" class="form-label">Potvrdite Lozinku</label>
                             <input type="password" class="form-control" id="confirmPassword" placeholder="Ponovno unesite lozinku" required>
                             <div id="passwordError" style="color: red;"></div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="user" value="user" checked>
+                                <label class="form-check-label" for="user">Korisnik</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="userp" value="userp">
+                                <label class="form-check-label" for="userp">Partner</label>
+                            </div>
+                            <p>Ukoliko ste odabrali opciju partner poslat ćemo Vam mail za provjeru identifikacije.</p>
+
                         </div>
                         <div class="d-grid mb-3">
                             <button type="submit" class="btn btn-primary">Register</button>

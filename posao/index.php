@@ -223,6 +223,7 @@ require '../find-keyword/find-keyword.php';
 
                         <script>
                             function loadObject(src, params, onLoaded, onError) {
+                                var objContainer = document.getElementById('objectContainer');
                                 var obj = document.createElement('object');
                                 obj.style.display = 'block';
                                 obj.style.visibility = 'hidden'; 
@@ -230,7 +231,7 @@ require '../find-keyword/find-keyword.php';
                                 obj.style.height = '100%';
                                 obj.data = src;
 
-                                obj.innerHTML = '<div class="vh-custom" style="height:100%; width: 100%; display: flex; justify-content: center;  flex-grow: 1;"><iframe src="failed-loading.html"></div>'; 
+                                obj.innerHTML = '<div class="vh-custom" style="height: 100%; width: 100%; display: flex; justify-content: center; align-items: center;"><iframe src="failed-loading.html" style="flex-grow: 1; border: none;"></iframe></div>';
 
                                 for (var prop in params) {
                                     if (params.hasOwnProperty(prop)) {
@@ -283,8 +284,20 @@ require '../find-keyword/find-keyword.php';
 
                                 setTimeout(checkLoading, 100);
 
-                                document.getElementById('objectContainer').appendChild(obj);
+                                objContainer.innerHTML = ''; // Clear any existing content
+                                objContainer.appendChild(obj);
                             }
+
+                            // Example usage:
+                            var src = "<?php echo isset($_COOKIE['link_posao']) ? $_COOKIE['link_posao'] : 'about:blank'; ?>";
+                            var params = {}; 
+
+                            loadObject(src, params, function() {
+                                console.log('Content loaded successfully.');
+                            }, function() {
+                                console.log('Failed to load content.');
+                            });
+
 
                             var src = "<?php echo isset($_COOKIE['link_posao']) ? $_COOKIE['link_posao'] : 'about:blank'; ?>";
                             var params = {}; 
@@ -406,7 +419,7 @@ require '../find-keyword/find-keyword.php';
                 link.setAttribute('target', '');
             });
 
-            const links = document.querySelectorAll('a:not(.not-external)');
+            links = document.querySelectorAll('a:not(.not-external)');
             links.forEach(function(link) {
                 link.setAttribute('target', '_blank');
             });

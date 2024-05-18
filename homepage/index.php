@@ -1,3 +1,12 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['servername'])) {
+    header("Location: ../setglbvar/setvardtb.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,57 +31,29 @@
 
     <script src="https://kit.fontawesome.com/90b9bb8c8d.js" crossorigin="anonymous"></script>
     <style>
-        body {
+        body{
             overflow: hidden;
         }
-
-        .vh-custom {
-            height: 65vh !important;
-        }
-
-        @media (max-width: 767px) {
-            .vh-custom {
-                height: 40vh !important;
-            }
-        }
-
-        @media (max-width: 337px) {
-            .vh-custom {
-                height: 30vh !important;
-            }
-        }
-
-        .flex-grow-1 {
-            flex-grow: 1;
-        }
-
-        .container {
-            height: 100%;
-        }
-
-        .card {
-            height: 100%;
-        }
-
-        .card-body {
-            height: 100%;
-        }
-
-        .if-cont {
-            height: 100%;
-            overflow: hidden;
-        }
-
-        #objectContainer {
-            height: 100%;
-            width: 100%;
-        }
-
-        object {
+        
+        iframe {
             border: none;
             height: 100%;
             width: 100%;
             overflow: hidden;
+        }
+
+        .if-cont{
+            height: 60vh; 
+            overflow: auto; 
+        }
+
+
+
+        @media (max-width: 800px) {
+            .if-cont{
+            height: 40vh; 
+            overflow: auto; 
+        }
         }
 
         .floating-button {
@@ -87,9 +68,12 @@
             color: white;
             cursor: pointer;
         }
+
+        
     </style>
 </head>
 <body>
+    <!-- pomocu php-a ispisujem prog. kod. toolbara, te ima dvije opcije, ako je korisnik ulogiran i ako nije -->
     <div id="toolbarContainer">
         <?php
             require '../toolbar/whatToolbarToUse.php';
@@ -99,18 +83,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="d-flex flex-column">
-        <div class="container h-100">
-            <div class="card h-100">
-                <div class="card-body container-fluid h-100">
+    <div class="d-flex flex-column vh-100">
+        <div class="container" >
+            <div class="card">
+                <div class="card-body container-fluid">
+                    
+                    
                     <div class="container-fluid mb-2">
                         <p class="card-text text-center">Nakon odabira fakulteta će se prikazati više podataka.</p>
                     </div>
+                    
 
                     <div class="container">
                         <div class="row text-center">
                             <div class="col-md-4 mb-3"> 
-                                <button class="btn btn-success btn-block" onclick="window.location.href='../posao/'">Posao</button>
+                                <button class="btn btn-success btn-block"  onclick="window.location.href='../posao/'">Posao</button>
                             </div>
                             <div class="col-md-4 mb-3"> 
                                 <button class="btn btn-success btn-block" onclick="window.location.href='../prebacivanje-fakulteta/index.php'">Prebacivanje smjerova</button>
@@ -120,123 +107,72 @@
                             </div>
                         </div>
                     </div>
+                    
+                </div>
+            </div>
 
+            <div class="card mt-3 flex-grow-1" >
+                <div class="card-body container-fluid">
+                    
                     <?php
                         $servername = $_SESSION['servername'];
                         $username = $_SESSION['username'];
                         $password = $_SESSION['password'];
                         $database = $_SESSION['database'];
-                        
-                        if (isset($_COOKIE["id_smjera"])) {
+                        //spajanje na bazu i izvlacenje podataka o svim fakultetima, povezano sa JOIN sa smjerovima
+                        if(isset($_COOKIE["id_smjera"])) {//ovdje ulazi samo ako je odabran neki smjer, ili ako ulogirani korisnik ima smjer
                             $id_smjera = $_COOKIE["id_smjera"];
+
                             $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
                             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        
+                            
                             $stmt = $conn->query("SELECT * FROM fakultet JOIN smjer ON fakultet.id_fakultet = smjer.id_fakultet");
                             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                             $fakultet = "";
                             $smjer = "";
 
                             foreach ($result as $row) {
-                                if (htmlspecialchars($row['id_smjer']) == $id_smjera) {
+                                if(htmlspecialchars($row['id_smjer']) == $id_smjera){//trazi korisnikov smjer, ovo kasnije u sql-u samo provjeriti da on vrati jedno, a ne gledati kroz sve
                                     $fakultet = htmlspecialchars($row['ime_fakulteta']);
                                     $smjer = htmlspecialchars($row['ime_smjer']);
                                 }
                             }
-
+                            
+                            
                             echo '
                             <div class="container-fluid mb-2">
-                                <h1 class="card-text text-center">' . $fakultet . '</h1>
-                                <h2 class="card-text text-center">' . $smjer . '</h2>
-                            </div>';
-                        } else {
+                                <h1 class="card-text text-center">'.$fakultet.'</h1>
+                                <h2 class="card-text text-center">'.$smjer.'</h2>
+                            </div>
+                            ';
+                        }else{
                             echo '
                             <div class="container-fluid mb-2">
                                 <h1 class="card-text text-center">Nema zabilježena prijava na faks.</h1>
                                 <p class="card-text text-center">Ukoliko želite možete odabrati neki drugi fakultet i vidjeti njegove opcije.</p>
-                            </div>';
+                            </div>
+                            ';
                         }
                     ?>
 
-                    <div class="container if-cont overflow-hidden vh-custom">
-                        <div id="objectContainer" style="height: 100%; width: 100%;">
-                        </div>
-                    </div>
+                    
+                    <?php
+                        if(isset($_COOKIE["link_stranica"])) {//ako je postavljen cookie, sto znaci da taj fakultet ima svoj homepage, napravi iframe toga 
+                            echo '<div class="container if-cont overflow-hidden">
+                                <iframe src="'.$_COOKIE["link_stranica"].'"></iframe>
+                            </div>';                 
 
-                    <script>
-                        function loadObject(src, params, onLoaded, onError) {
-                            var obj = document.createElement('object');
-                            obj.style.display = 'block';
-                            obj.style.visibility = 'hidden'; 
-                            obj.style.width = '100%';
-                            obj.style.height = '100%';
-                            obj.data = src;
-
-                            obj.innerHTML = '<div class="vh-custom" style="height:100%; width: 100%; display: flex; justify-content: center;  flex-grow: 1;"><iframe src="failed-loading.html"></div>'; 
-
-                            for (var prop in params) {
-                                if (params.hasOwnProperty(prop)) {
-                                    var param = document.createElement('param');
-                                    param.name = prop;
-                                    param.value = params[prop];
-                                    obj.appendChild(param);
-                                }
-                            }
-
-                            function isReallyLoaded(obj) {
-                                return obj.offsetHeight !== 5; 
-                            }
-
-                            var isLoaded = false;
-
-                            obj.onload = function () {
-                                if (!isLoaded) {
-                                    isLoaded = true;
-                                    if (isReallyLoaded(obj)) {
-                                        obj.style.visibility = 'visible'; 
-                                        onLoaded();
-                                    } else {
-                                        onError();
-                                    }
-                                }
-                            };
-
-                            obj.onerror = function () {
-                                if (!isLoaded) {
-                                    isLoaded = true;
-                                    onError();
-                                }
-                            };
-
-                            function checkLoading() {
-                                if (!isLoaded) {
-                                    if (obj.offsetHeight > 0) { 
-                                        if (isReallyLoaded(obj)) {
-                                            obj.style.visibility = 'visible'; 
-                                            onLoaded();
-                                        } else {
-                                            onError();
-                                        }
-                                    } else {
-                                        setTimeout(checkLoading, 100);
-                                    }
-                                }
-                            }
-
-                            setTimeout(checkLoading, 100);
-
-                            document.getElementById('objectContainer').appendChild(obj);
+                        }else{
+                            echo '<div class="container text-center">
+                                <p>Odaberite fakultet</p>
+                            </div>';
                         }
-
-                        var src = "<?php echo isset($_COOKIE['link_stranica']) ? $_COOKIE['link_stranica'] : 'about:blank'; ?>";
-                        var params = {}; 
-
-                        loadObject(src, params, function() {
-                            console.log('Content loaded successfully.');
-                        }, function() {
-                            console.log('Failed to load content.');
-                        });
-                    </script>
+                    ?>
                 </div>
+
+                
             </div>
         </div>
     </div>

@@ -12,8 +12,11 @@ if (!isset($_SESSION['servername'])) {
 function whatToolbarToUse(){
 
     if(isset($_COOKIE['logininfo'])){
-        if(isset($_SESSION['id_tempuser']) && $_SESSION['id_tempuser'] == 1){
+        if(isset($_SESSION['status']) && $_SESSION['status'] == 'admin'){
             $toolbar_content = file_get_contents("../toolbar/toolbarAdmin.html");
+            return $toolbar_content;
+        }else if(isset($_SESSION['status']) && $_SESSION['status'] == 'partner'){
+            $toolbar_content = file_get_contents("../toolbar/toolbarPartner.html");
             return $toolbar_content;
         }else{
             $toolbar_content = file_get_contents("../toolbar/toolbarLoggedIn.html");

@@ -10,6 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
     $fullName = $_POST["fullName"];
+    $status = $_POST['status'];
+    //userp je soon to be partner, mora proci autentifikaciju
+    //mozemo dodati da automatski salje mailove, koristiti composer
+
+    if($status == 'userp'){
+
+    }
 
     if (empty($email) || empty($password)) {
         echo "Email i sifra su potrebni.";
@@ -35,12 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($count > 0) {
             header("Location: register.php?wrong=True");
         }else{
-
-            $stmt = $conn->prepare("INSERT INTO tempuser (email, password, ime) VALUES (:email, :password, :ime)");
+            
+            $stmt = $conn->prepare("INSERT INTO tempuser (email, password, ime, status) VALUES (:email, :password, :ime, :status)");
         
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':ime', $fullName);
+            $stmt->bindParam(':status', $status);
     
             $stmt->execute();
             header("Location: login-page.php");

@@ -151,7 +151,7 @@
         <div class="card">
             <div class="card-body container-fluid">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 mb-sm-3">
+                    <div class="col-md-12 col-sm-12 mb-3">
                         <form action="#" method="GET">
                             <label for="ime_fakulteta" class="form-label">Ime fakulteta:</label>
                             <input type="text" id="ime_fakulteta" name="ime_fakulteta" class="form-control">
@@ -162,10 +162,13 @@
                             <button type="submit" class="btn-success btn mt-3">Filter</button>
                         </form>
                     </div>
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12 mb-3">
                         <form action="izbrisiCookies.php" method="POST">
                             <button type="submit" class="btn-success btn">Reset</button>
                         </form>
+                    </div>
+                    <div class="col-md-12 col-sm-12 mb-3">
+                        <a href="../homepage/" class="btn-success btn">Home</a>
                     </div>
                 </div>
             </div>

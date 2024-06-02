@@ -4,8 +4,6 @@
     }
     if (!isset($_SESSION['servername'])) {
         header("Location: ../setglbvar/setvardtb.php");
-    }else if ((isset($_SESSION['status']) && $_SESSION['status'] != 'partner')) {
-        header("Location: ../customerrors/403.html");
     }
 
     $servername = $_SESSION['servername'];
@@ -73,6 +71,20 @@
         ";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':posao_id', $posao_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getPosloviBySmjerId($smjer_id) {
+        global $conn;
+        $sql = "
+            SELECT posao.* 
+            FROM posao
+            JOIN posao_smjer ON posao.id_posao = posao_smjer.id_posao
+            WHERE posao_smjer.id_smjer = :smjer_id
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':smjer_id', $smjer_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

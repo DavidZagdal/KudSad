@@ -84,7 +84,7 @@
                             <p class="card-text text-center text-white-50">Pritisnite za više detalja.</p>
                         </a> 
                         <div class="collapse details-card" id="cookiePolicy">
-                            <iframe src="privacy-policy.html" style="width: 100%; height: 45vh;" frameborder="0"></iframe>
+                            <iframe src="cookie-policy.html" style="width: 100%; height: 45vh;" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>

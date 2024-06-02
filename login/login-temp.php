@@ -90,6 +90,7 @@ require '../odabir-fakulteta/saveToCookie.php';
                     $linkstranica = htmlspecialchars($row['link_stranica']);
                     $linkposao = htmlspecialchars($row['link_posao']);
                     $imefakulteta = htmlspecialchars($row['ime_fakulteta']);
+                    $linkprijelaz = htmlspecialchars($row['link_prijelaz']);
                 }
             }
             if($linkstranica != ""){
@@ -102,6 +103,12 @@ require '../odabir-fakulteta/saveToCookie.php';
                 setcookie("link_posao", $linkposao, time() + (86400 * 30), "/");
             }else{
                 setcookie("link_posao", searchGoogleFirstPage($imefakulteta.' posao'), time() + (86400 * 30), "/");
+            }
+
+            if($linkprijelaz != ""){
+                setcookie("link_prijelaz", $linkprijelaz, time() + (86400 * 30), "/");
+            }else{
+                setcookie("link_prijelaz", searchGoogleFirstPage($imefakulteta.' prijelaz'), time() + (86400 * 30), "/");
             }
 
         } catch (PDOException $e) {

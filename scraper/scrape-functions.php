@@ -135,7 +135,6 @@ function scrapeAndStoreDataPosaoHr($keyword) {
 
 
 
-scrapeAndStoreDataPosaoHr('Grafički dizajner');
 
 function checkMatch($string1, $string2) {
     

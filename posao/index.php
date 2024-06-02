@@ -4,11 +4,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 if (!isset($_SESSION['servername'])) {
     header("Location: ../setglbvar/setvardtb.php");
+    exit();
 }
 require '../scraper/scrape-functions.php';
 require '../find-keyword/find-keyword.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,6 +120,12 @@ require '../find-keyword/find-keyword.php';
             line-height: 1.5;
         }
 
+        .p-not {
+            color: #FFFFFF;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
         @keyframes shadow-animation {
             0% {
                 box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
@@ -153,16 +159,27 @@ require '../find-keyword/find-keyword.php';
         #tab3-content {
             display: none;
         }
+
+        #loading-tab4 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #28a745;
+        }
+
+        #tab4-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
-
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                loadTab3Content();
-            });
-        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTab3Content();
+            loadTab4Content();
+        });
+    </script>
 
     <div id="toolbarContainer">
         <?php
@@ -210,7 +227,7 @@ require '../find-keyword/find-keyword.php';
                             <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">posao.hr</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Za Vas</button>
+                            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Za Vas</button>
                         </li>
                     </ul>
 
@@ -284,11 +301,10 @@ require '../find-keyword/find-keyword.php';
 
                                 setTimeout(checkLoading, 100);
 
-                                objContainer.innerHTML = ''; // Clear any existing content
+                                objContainer.innerHTML = ''; 
                                 objContainer.appendChild(obj);
                             }
 
-                            // Example usage:
                             var src = "<?php echo isset($_COOKIE['link_posao']) ? $_COOKIE['link_posao'] : 'about:blank'; ?>";
                             var params = {}; 
 
@@ -344,11 +360,20 @@ require '../find-keyword/find-keyword.php';
                                 <div id="tab3-content"></div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                            <div class="container if-cont">
+                                <div id="loading-tab4">
+                                    Učitavanje, molimo sačekajte par sekundi.
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <div id="tab4-content"></div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
                             <div class="container text-center">
-                                <p>Poslovni partneri za Vas!</p>
-                                <p>Funkcionalnost stiže kada izađe finalna verzija aplikacije.</p>
-                                <p>Partneri će se prijaviti te moći staviti oglase direktno na ovu stranicu.</p>
+                                <p>Partneri još nisu postavili posao za Vaš smjer!</p>
                             </div>
                         </div>
                     </div>
@@ -360,6 +385,9 @@ require '../find-keyword/find-keyword.php';
     <script>
         let tab3ContentLoaded = false;
         let tab3Content = '';
+
+        let tab4ContentLoaded = false;
+        let tab4Content = '';
 
         function loadTab3Content() {
             if (!tab3ContentLoaded) {
@@ -393,6 +421,40 @@ require '../find-keyword/find-keyword.php';
                 }
             };
             xhr.send('id_smjera=' + encodeURIComponent(getCookie('id_smjera')));
+        }
+
+        function loadTab4Content() {
+            if (!tab4ContentLoaded) {
+                document.getElementById('loading-tab4').style.display = 'flex';
+                document.getElementById('tab4-content').style.display = 'none';
+                
+                setTimeout(function() {
+                    fetchTab4Content();
+                }, 0);
+            } else {
+                document.getElementById('tab4-content').style.display = 'block';
+            }
+        }
+
+        function fetchTab4Content() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'fetch_tab4_content.php', true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    tab4Content = xhr.responseText;
+                    document.getElementById('tab4-content').innerHTML = tab4Content;
+                    document.getElementById('loading-tab4').style.display = 'none';
+                    document.getElementById('tab4-content').style.display = 'block';
+                    
+                    tab4ContentLoaded = true;
+                }
+            };
+
+            var formData = new FormData();
+            formData.append('id_smjera', getCookie('id_smjera'));
+
+            xhr.send(formData);
         }
 
         function getCookie(name) {

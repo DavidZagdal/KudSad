@@ -1,72 +1,52 @@
 <style>
-    
-    .navbar {
+    .navbar, .dropdown-item, .dropdown-menu {
         background-color: #181818 !important; 
-        
     }
-    
     .navbar-brand,
-    .nav-link {
+    .nav-link,  .dropdown-item {
         color: #FFFFFF !important; 
     }
-    
-    
     .navbar-toggler {
         border-color: #FFFFFF !important; 
     }
-
-    
     .navbar-toggler-icon-bar {
-    background-color: #FFFFFF; 
+        background-color: #FFFFFF; 
     }
-    
     .navbar-nav {
         display: flex;
         justify-content: space-between;
         width: 100%;
     }
-    
     .navbar-nav .nav-item {
         margin: 0 30px;
     }
-    
-    .navbar-nav .nav-link:hover {
+    .navbar-nav .nav-link:hover,  .dropdown-item:hover {
         color: #28a745 !important; 
     }
-
     .image-with-glow {
-    box-shadow: 0 0 10px #28a74642; 
-    border-radius: 50%;
+        box-shadow: 0 0 10px #28a74642; 
+        border-radius: 50%;
     }
-
-    .left-nav{
+    .left-nav {
         margin-left: 35vw; 
     }
-
-    .padding-left{
+    .padding-left {
         padding-left: 0px;
     }
-
     @media (max-width: 991px) {
-            .left-nav{
-                margin-left: 0; 
-            }
-            .padding-left{
-        padding-left: 10px;
-    }
-
+        .left-nav {
+            margin-left: 0; 
         }
-
-    </style>
-
-    
-    
+        .padding-left {
+            padding-left: 10px;
+        }
+    }
+</style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand not-external" href="../homepage/">
             <img src="../images/KudSadLogo.png" alt="KudSad Logo" width="50" height="50"> KudSad
-                
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -88,8 +68,14 @@
                 <li class="nav-item border border-success rounded m-sm-1 padding-left">
                     <a class="nav-link not-external" href="../homepage/">Home</a>
                 </li>
-                <li class="nav-item border border-success rounded m-sm-1 padding-left">
-                    <a class="nav-link not-external" href="../errors/logs.php">Logs</a>
+                <li class="nav-item dropdown border border-success rounded m-sm-1 padding-left">
+                    <a class="nav-link dropdown-toggle not-external" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item not-external border border-success rounded mb-2" href="../errors/logs.php">Logs</a></li>
+                        <li><a class="dropdown-item not-external border border-success rounded" href="../errors/pitanja-view.php">Pitanja</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
